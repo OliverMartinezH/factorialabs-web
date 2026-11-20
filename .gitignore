@@ -58,3 +58,8 @@ desktop.ini
 *.log
 *.tmp
 logs/
+
+# ===== Artefactos de herramientas locales =====
+.impeccable/shots/
+.impeccable/mocks/
+.gemini/

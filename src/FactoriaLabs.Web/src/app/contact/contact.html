@@ -1,0 +1,95 @@
+<div class="contact">
+  <form class="form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div class="row">
+      <label class="field">
+        <span>Nombre</span>
+        <input
+          type="text"
+          formControlName="name"
+          autocomplete="name"
+          [attr.aria-invalid]="invalid('name')"
+        />
+        @if (invalid('name')) {
+          <em class="err">Escribe tu nombre.</em>
+        }
+      </label>
+
+      <label class="field">
+        <span>Empresa</span>
+        <input type="text" formControlName="company" autocomplete="organization" />
+      </label>
+    </div>
+
+    <div class="row">
+      <label class="field">
+        <span>Email</span>
+        <input
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          [attr.aria-invalid]="invalid('email')"
+        />
+        @if (invalid('email')) {
+          <em class="err">Necesitamos un email válido para responderte.</em>
+        }
+      </label>
+
+      <label class="field">
+        <span>Sistema actual</span>
+        <input
+          type="text"
+          formControlName="currentSystem"
+          placeholder="Access, Excel, ASP clásico…"
+        />
+      </label>
+    </div>
+
+    <label class="field field-wide">
+      <span>Qué te está frenando</span>
+      <textarea
+        rows="4"
+        formControlName="message"
+        [attr.aria-invalid]="invalid('message')"
+      ></textarea>
+      @if (invalid('message')) {
+        <em class="err">Cuéntanos un poco más (mínimo una frase).</em>
+      }
+    </label>
+
+    <div class="submit-row">
+      <button class="btn" type="submit" [disabled]="status() === 'sending'">
+        @if (status() === 'sending') {
+          Enviando…
+        } @else {
+          Enviar mensaje
+        }
+      </button>
+      <p class="hint">Sin spam. Sin llamadas sorpresa.</p>
+    </div>
+
+    <p class="sr-status" role="status" aria-live="polite">
+      @switch (status()) {
+        @case ('sent') {
+          Mensaje recibido. Te respondemos a la brevedad.
+        }
+        @case ('error') {
+          {{ errorMessage() }}
+        }
+      }
+    </p>
+  </form>
+
+  <aside class="alt">
+    <p class="alt-label mono">O DIRECTAMENTE</p>
+    <a class="alt-link" [href]="contactHref">
+      {{ contactLabel }}
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
+    </a>
+    <p class="alt-note">
+      Si nos escribes, adjunta qué sistema usan hoy y cuántas personas lo operan. Con eso
+      llegamos a la primera reunión con algo útil.
+    </p>
+  </aside>
+</div>

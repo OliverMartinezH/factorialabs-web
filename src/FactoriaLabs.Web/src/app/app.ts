@@ -1,12 +1,10 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { Contact } from './contact/contact';
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
+  imports: [Contact],
   styleUrl: './app.scss',
   templateUrl: './app.html',
 })
-export class App {
-  protected readonly title = signal('FactoriaLabs.Web');
-}
+export class App {}
