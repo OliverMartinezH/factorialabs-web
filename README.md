@@ -53,7 +53,7 @@ docker compose up --build
 
 # API  -> http://localhost:5080/health
 # Web  -> http://localhost:4200
-# SQL  -> localhost,14330
+# SQL  -> localhost,14341
 ```
 
 Trabajo con hot reload (sin contenedores para el código):

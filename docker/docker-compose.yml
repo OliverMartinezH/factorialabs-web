@@ -13,7 +13,7 @@ services:
       MSSQL_PID: Developer
       MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?define MSSQL_SA_PASSWORD en docker/.env}
     ports:
-      - "14330:1433"
+      - "14341:1433"
     volumes:
       - factorialabs-sqldata:/var/opt/mssql
     healthcheck:
@@ -48,6 +48,7 @@ services:
     environment:
       PORT: 4000
       NODE_ENV: production
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1,factorialabs-web}
     ports:
       - "4200:4000"
     depends_on:
