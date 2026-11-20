@@ -4,33 +4,33 @@ Sistema visual de la portada de FactoriaLabs. Registra lo construido, no lo plan
 
 ## World
 
-**Panel de instrumentación en cutover.** La página se comporta como una consola que mide la
-paridad entre el sistema viejo y el nuevo: dos columnas, tres cifras, una diferencia que llega a
-cero. No promete resultados, los instrumenta.
+**Panel de instrumentación en cutover, sobre blanco.** La página mide la paridad entre el sistema
+viejo y el nuevo: dos columnas, tres cifras, una diferencia que llega a cero. No promete resultados,
+los instrumenta.
 
-Reemplaza el mundo anterior (hoja de checklist en papel). La barra de calidad son Linear y
-Stripe/Cloudflare: negro, tipografía grande, precisión y datos animados, sin gradientes de texto ni
-glass decorativo.
+Barra de calidad: Linear y Stripe/Cloudflare. Tipografía grande, bordes finos, un solo acento
+eléctrico y datos animados. Sin negro de fondo, sin degradado de texto, sin glass decorativo.
 
 ## Tokens
 
 | Token | Valor | Uso |
 |---|---|---|
-| `--bg` | `#07080a` | Fondo |
-| `--bg-2` | `#0b0d11` | Alterno |
-| `--panel` | `#101319` | Superficies, inputs, tarjetas |
-| `--panel-2` | `#161a21` | Hover de superficies |
-| `--line` | `#20252e` | Bordes |
-| `--line-soft` | `#171b22` | Separadores internos |
-| `--fg` | `#edeae3` | Texto principal (blanco cálido, no puro) |
-| `--fg-dim` | `#9ba1aa` | Texto secundario (≈8:1 sobre bg) |
-| `--fg-faint` | `#767d88` | Metadatos (≈5.4:1 sobre bg) |
-| `--accent` | `#ffb020` | Ámbar: señal, estado, acción |
-| `--ok` | `#6ee7a8` | Paridad verificada |
-| `--bad` | `#e5484d` | Límite explícito y error |
+| `--bg` | `#ffffff` | Fondo |
+| `--bg-2` | `#fbfbfd` | Alterno |
+| `--panel` | `#ffffff` | Superficies, inputs, tarjetas |
+| `--panel-2` | `#f6f6fb` | Hover de superficies |
+| `--line` | `#e3e3ec` | Bordes |
+| `--line-soft` | `#eeeef5` | Separadores internos |
+| `--fg` | `#0b0b12` | Texto principal |
+| `--fg-dim` | `#55555f` | Texto secundario (≈7.4:1) |
+| `--fg-faint` | `#7c7c88` | Metadatos (≈4.9:1) |
+| `--accent` | `#5b4bff` | Violeta eléctrico: señal, acción, estado |
+| `--accent-strong` | `#4636e8` | Hover del acento |
+| `--ok` | `#0b9e6e` | Paridad verificada |
+| `--bad` | `#d92d20` | Límite explícito y error |
 
-Fondo global: dos `radial-gradient` de baja opacidad (ámbar arriba a la derecha, azul frío a la
-izquierda) sobre el negro. Sin cuadrículas decorativas.
+Fondo global: dos `radial-gradient` muy suaves (violeta arriba a la derecha, cian a la izquierda)
+sobre blanco. Sin cuadrículas decorativas.
 
 ## Tipografía
 
@@ -52,14 +52,14 @@ La mono solo aparece donde hay una medición, un código o una etiqueta de estad
 
 | Componente | Regla |
 |---|---|
-| `.panel` | Consola de paridad: borde `--line`, radio 12 px, gradiente vertical sutil, scanline ámbar de 5.5 s |
-| `.metrics` | Filas `1fr auto auto 1rem`; el valor nuevo es brillante, el legacy atenuado; el check verde entra escalonado |
+| `.panel` | Consola de paridad: borde `--line`, radio 12 px, gradiente blanco a `#fafaff`, sombra `0 30px 70px -28px rgba(24,20,64,.22)`, scanline violeta de 5.5 s |
+| `.metrics` | Filas `1fr auto auto 1rem`; el valor nuevo en tinta plena, el legacy atenuado; el check verde entra escalonado |
 | `.ticker` | Banda de stack con marquee de 34 s y máscara de degradado en los bordes |
-| `.migrate` | Diagrama de 3 fuentes que convergen en una tarjeta destino con borde ámbar y glow |
-| `.phases` | Rejilla de 5 columnas con número mono, y verificación en verde al pie |
+| `.migrate` | Diagrama de 3 fuentes que convergen en una tarjeta con borde violeta, tinte suave y glow |
+| `.phases` | Rejilla de 5 columnas con número mono y verificación en verde al pie |
 | `.specs` | Dos columnas de definiciones `105px / 1fr`, etiqueta mono en mayúsculas |
 | `.limits` | Tres afirmaciones con casilla roja dibujada en `::before` |
-| Formulario | Inputs sobre `--panel`, borde `--line`, foco ámbar con halo suave |
+| Formulario | Inputs blancos con borde `--line`, foco violeta con halo de 3 px |
 
 Sin tarjetas anidadas, sin grillas de icono + título + texto, sin degradado en texto, sin blur
 decorativo.
@@ -71,15 +71,15 @@ Un momento orquestado, todo desde un estado ya visible:
 1. La scanline del panel recorre la consola cada 5.5 s.
 2. Los checks de paridad entran a 0.9 s, 1.35 s y 1.8 s (`check-in`, 480 ms).
 3. El ticker se desplaza de forma continua.
-4. Hover: `translateY(-1px)` en botones y cambio de borde en tarjetas.
+4. Hover: `translateY(-1px)` en botones y borde violeta en tarjetas.
 
 Nada de contenido oculto esperando scroll. Todo se anula bajo `prefers-reduced-motion: reduce`.
 
 ## Estados y superficies del navegador
 
-- Selección: fondo ámbar, texto negro.
+- Selección: fondo violeta, texto blanco.
 - Foco: `outline: 2px solid var(--accent)`, `offset: 3px`.
-- Scrollbar: `#2a303a` sobre transparente, delgada.
+- Scrollbar: `#cfcfda` sobre transparente, delgada.
 - Formulario: `idle / sending / sent / error`, anunciado por `role="status" aria-live="polite"`.
 - Errores con `aria-invalid` y mensaje bajo el campo; nunca solo color.
 
@@ -93,6 +93,6 @@ Nada de contenido oculto esperando scroll. Todo se anula bajo `prefers-reduced-m
 ## Reglas
 
 1. Ningún dato comercial inventado: sin precios, plazos, clientes ni métricas.
-2. El ámbar señala lo que está en curso o requiere acción; el verde, paridad verificada; el rojo,
+2. El violeta señala lo que requiere acción o está en curso; el verde, paridad verificada; el rojo,
    límites y errores.
 3. Cada sección demuestra un hecho verificable del método o del stack.

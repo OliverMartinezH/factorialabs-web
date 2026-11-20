@@ -54,7 +54,7 @@ input:focus,
 textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(255, 176, 32, 0.12);
+  box-shadow: 0 0 0 3px rgba(91, 75, 255, 0.16);
 }
 
 input[aria-invalid='true'],
@@ -88,7 +88,7 @@ textarea[aria-invalid='true'] {
   border: 1px solid transparent;
   border-radius: 6px;
   background: var(--accent);
-  color: #07080a;
+  color: #ffffff;
   font: inherit;
   font-size: 0.93rem;
   font-weight: 600;
@@ -99,7 +99,7 @@ textarea[aria-invalid='true'] {
 }
 
 .btn:hover:not([disabled]) {
-  background: #ffc24d;
+  background: var(--accent-strong);
   transform: translateY(-1px);
 }
 
