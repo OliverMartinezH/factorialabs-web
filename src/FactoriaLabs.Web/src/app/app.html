@@ -1,118 +1,151 @@
 <header class="top">
-  <a class="brand" href="#inicio" aria-label="FactoriaLabs, ir al inicio">
-    <span class="brand-mark" aria-hidden="true">
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2">
-        <path d="M3 17.5 9 11l4 4 8-9" />
-      </svg>
-    </span>
-    <span class="brand-name">FactoriaLabs</span>
-  </a>
+  <div class="top-inner">
+    <a class="brand" href="#inicio" aria-label="FactoriaLabs, ir al inicio">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">FactoriaLabs</span>
+      <span class="brand-tag mono">/ factory</span>
+    </a>
 
-  <nav class="nav" aria-label="Principal">
-    <a href="#caso">Caso</a>
-    <a href="#metodo">Método</a>
-    <a href="#stack">Stack</a>
-    <a class="nav-cta" href="#contacto">Hablemos</a>
-  </nav>
+    <nav class="nav" aria-label="Principal">
+      <a href="#caso">Caso</a>
+      <a href="#metodo">Método</a>
+      <a href="#stack">Stack</a>
+      <a class="nav-cta" href="#contacto">Hablemos</a>
+    </nav>
+  </div>
 </header>
 
 <main id="inicio">
 
   <section class="hero">
-    <div class="hero-copy">
-      <h1>El sistema viejo no se apaga hasta que el nuevo cuadra.</h1>
-      <p class="lede">
-        Modernizamos software que ya no se puede mantener —ASP clásico, Access, planillas
-        sueltas— hacia .NET 11 y SQL Server. Por fases, con el sistema anterior funcionando
-        en paralelo hasta que los números coinciden.
-      </p>
-      <div class="actions">
-        <a class="btn btn-primary" href="#contacto">Revisemos tu caso</a>
-        <a class="btn btn-ghost" href="#metodo">Ver el método</a>
-      </div>
-    </div>
+    <div class="hero-grid">
 
-    <aside class="board" aria-label="Checklist de diagnóstico de la fase cero">
-      <div class="board-head">
-        <span>Fase 0 — Diagnóstico</span>
-        <span class="mono">REV. 11/2026</span>
+      <div class="hero-copy">
+        <h1>El sistema viejo no se apaga hasta que el nuevo <em>cuadra</em>.</h1>
+        <p class="lede">
+          Modernizamos software que ya nadie quiere tocar —ASP clásico, Access, planillas
+          sueltas— hacia .NET 11 y SQL Server. Los dos sistemas corren en paralelo hasta que
+          cada cifra coincide.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#contacto">
+            Revisemos tu caso
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
+          <a class="btn btn-ghost" href="#metodo">Ver el método</a>
+        </div>
+        <p class="hero-meta mono">
+          <span>Santiago, CL</span>
+          <span>20 años en producción</span>
+          <span>Caso 001 en curso</span>
+        </p>
       </div>
-      <ul class="checklist">
-        <li class="checked">
-          <span class="box" aria-hidden="true">
-            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4">
-              <path d="M2.5 8.5 6 12l7.5-8" />
-            </svg>
-          </span>
-          <span class="label">Inventario de pantallas</span>
-          <span class="tag mono">hecho</span>
-        </li>
-        <li class="checked">
-          <span class="box" aria-hidden="true">
-            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4">
-              <path d="M2.5 8.5 6 12l7.5-8" />
-            </svg>
-          </span>
-          <span class="label">Consultas Access mapeadas</span>
-          <span class="tag mono">hecho</span>
-        </li>
-        <li class="current">
-          <span class="box" aria-hidden="true"></span>
-          <span class="label">Reglas de negocio escritas</span>
-          <span class="tag mono">en curso</span>
-        </li>
-        <li>
-          <span class="box" aria-hidden="true"></span>
-          <span class="label">Datos cuadrados al peso</span>
-          <span class="tag mono">pendiente</span>
-        </li>
-      </ul>
-      <p class="board-foot">Ninguna fase avanza sin que la anterior esté verificada.</p>
-    </aside>
+
+      <div class="panel" role="group" aria-label="Panel de paridad entre el sistema legacy y el nuevo">
+        <div class="panel-head">
+          <span class="led" aria-hidden="true"></span>
+          <span class="mono">PARIDAD DE DATOS</span>
+          <span class="mono panel-live">EN VIVO</span>
+        </div>
+
+        <div class="panel-cols">
+          <div>
+            <p class="col-label mono">LEGACY</p>
+            <p class="col-value">ASP · Access</p>
+          </div>
+          <div class="col-target">
+            <p class="col-label mono">NUEVO</p>
+            <p class="col-value">.NET 11 · SQL</p>
+          </div>
+        </div>
+
+        <ul class="metrics">
+          <li style="--d: 0.9s">
+            <span class="m-name">Cierre de caja</span>
+            <span class="m-val mono">4.182.900</span>
+            <span class="m-val mono">4.182.900</span>
+            <span class="m-check" aria-hidden="true">✓</span>
+          </li>
+          <li style="--d: 1.35s">
+            <span class="m-name">Ventas del día</span>
+            <span class="m-val mono">1.284</span>
+            <span class="m-val mono">1.284</span>
+            <span class="m-check" aria-hidden="true">✓</span>
+          </li>
+          <li style="--d: 1.8s">
+            <span class="m-name">Unidades en stock</span>
+            <span class="m-val mono">3.902</span>
+            <span class="m-val mono">3.902</span>
+            <span class="m-check" aria-hidden="true">✓</span>
+          </li>
+        </ul>
+
+        <div class="panel-foot">
+          <span class="mono">DIFERENCIA</span>
+          <span class="mono zero">0,00</span>
+        </div>
+      </div>
+
+    </div>
   </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track mono">
+      <span>.NET 11</span><span>ANGULAR 22</span><span>SQL SERVER 2025</span><span>DOCKER COMPOSE</span>
+      <span>XUNIT</span><span>CI / CD</span><span>ENTRA ID</span><span>ON-PREMISE</span>
+      <span>.NET 11</span><span>ANGULAR 22</span><span>SQL SERVER 2025</span><span>DOCKER COMPOSE</span>
+      <span>XUNIT</span><span>CI / CD</span><span>ENTRA ID</span><span>ON-PREMISE</span>
+    </div>
+  </div>
 
   <section id="caso" class="section">
     <div class="section-rail">
       <span class="mono">CASO 001</span>
-      <span class="status">en curso</span>
+      <span class="chip">en curso</span>
     </div>
     <div class="section-body">
       <h2>Tres sistemas, un solo reemplazo.</h2>
       <p class="section-lede">
         Cliente retail. Tres aplicaciones en ASP clásico sobre bases Access, cada una con su
-        propia copia de los mismos datos. Se consolidan en un monolito modular, no en tres
-        sistemas nuevos.
+        propia copia de los mismos datos. Se consolidan en un monolito modular — no en tres
+        sistemas nuevos que hereden el mismo problema.
       </p>
 
-      <table class="ledger">
-        <caption class="mono">Origen → destino</caption>
-        <tbody>
-          <tr>
-            <td class="mono num">01</td>
-            <td>Ventas y caja</td>
-            <td class="arrow" aria-hidden="true">→</td>
-            <td>Módulo de ventas</td>
-            <td class="mono state">en migración</td>
-          </tr>
-          <tr>
-            <td class="mono num">02</td>
-            <td>Inventario</td>
-            <td class="arrow" aria-hidden="true">→</td>
-            <td>Módulo de stock</td>
-            <td class="mono state">en migración</td>
-          </tr>
-          <tr>
-            <td class="mono num">03</td>
-            <td>Compras y proveedores</td>
-            <td class="arrow" aria-hidden="true">→</td>
-            <td>Módulo de abastecimiento</td>
-            <td class="mono state">en migración</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="migrate">
+        <ul class="migrate-src">
+          <li>
+            <span class="mono idx">01</span>
+            <span class="src-name">Ventas y caja</span>
+            <span class="mono src-tech">ASP + Access</span>
+          </li>
+          <li>
+            <span class="mono idx">02</span>
+            <span class="src-name">Inventario</span>
+            <span class="mono src-tech">ASP + Access</span>
+          </li>
+          <li>
+            <span class="mono idx">03</span>
+            <span class="src-name">Compras y proveedores</span>
+            <span class="mono src-tech">ASP + Access</span>
+          </li>
+        </ul>
+
+        <div class="migrate-link" aria-hidden="true"></div>
+
+        <div class="migrate-dst">
+          <p class="mono dst-label">DESTINO</p>
+          <h3>Monolito modular</h3>
+          <p class="dst-meta">.NET 11 · SQL Server</p>
+          <p class="dst-meta">Una base, tres módulos</p>
+          <p class="dst-state mono"><span class="led" aria-hidden="true"></span>legacy en paralelo</p>
+        </div>
+      </div>
 
       <p class="footnote">
-        El legacy sigue operando. Sin testimonio publicado todavía: el proyecto no ha cerrado.
+        Sin testimonio publicado todavía: el proyecto no ha cerrado. Cuando cierre, aparecerá aquí
+        con nombre y fecha.
       </p>
     </div>
   </section>
@@ -120,55 +153,45 @@
   <section id="metodo" class="section">
     <div class="section-rail">
       <span class="mono">MÉTODO</span>
-      <span class="status">por fases</span>
+      <span class="chip">por fases</span>
     </div>
     <div class="section-body">
       <h2>Cada fase se verifica antes de la siguiente.</h2>
       <p class="section-lede">
-        No hay fecha de término global sin inventario previo. Hay fases cerradas, cobradas y
-        comprobadas una por una.
+        No hay fecha global sin inventario previo. Hay fases cerradas, cobradas y comprobadas
+        una por una.
       </p>
 
       <ol class="phases">
         <li>
-          <span class="phase-n mono">0</span>
-          <div class="phase-main">
-            <h3>Diagnóstico</h3>
-            <p>Inventario de pantallas, consultas Access y reglas escondidas en el código.</p>
-          </div>
-          <p class="phase-check"><span class="mono">verificación</span> Toda consulta clasificada</p>
+          <span class="phase-n mono">00</span>
+          <h3>Diagnóstico</h3>
+          <p>Inventario de pantallas, consultas Access y reglas escondidas en el código.</p>
+          <p class="check mono"><span aria-hidden="true">✓</span> toda consulta clasificada</p>
         </li>
         <li>
-          <span class="phase-n mono">1</span>
-          <div class="phase-main">
-            <h3>Datos</h3>
-            <p>Migración de Access a SQL Server, con limpieza previa de claves y nulos.</p>
-          </div>
-          <p class="phase-check"><span class="mono">verificación</span> Conteos, totales y muestras cuadran</p>
+          <span class="phase-n mono">01</span>
+          <h3>Datos</h3>
+          <p>Migración de Access a SQL Server, con limpieza previa de claves y nulos.</p>
+          <p class="check mono"><span aria-hidden="true">✓</span> conteos y totales cuadran</p>
         </li>
         <li>
-          <span class="phase-n mono">2</span>
-          <div class="phase-main">
-            <h3>Primer módulo</h3>
-            <p>Ventas y caja en .NET 11, corriendo en paralelo al sistema antiguo.</p>
-          </div>
-          <p class="phase-check"><span class="mono">verificación</span> El mismo cierre de caja en ambos</p>
+          <span class="phase-n mono">02</span>
+          <h3>Primer módulo</h3>
+          <p>Ventas y caja en .NET 11, corriendo en paralelo al sistema antiguo.</p>
+          <p class="check mono"><span aria-hidden="true">✓</span> mismo cierre en ambos</p>
         </li>
         <li>
-          <span class="phase-n mono">3</span>
-          <div class="phase-main">
-            <h3>Resto de módulos</h3>
-            <p>Stock y abastecimiento con el mismo criterio: uno a la vez, comparado contra el legacy.</p>
-          </div>
-          <p class="phase-check"><span class="mono">verificación</span> Mismas cifras por módulo</p>
+          <span class="phase-n mono">03</span>
+          <h3>Resto</h3>
+          <p>Stock y abastecimiento con el mismo criterio: uno a la vez, comparado.</p>
+          <p class="check mono"><span aria-hidden="true">✓</span> mismas cifras por módulo</p>
         </li>
         <li>
-          <span class="phase-n mono">4</span>
-          <div class="phase-main">
-            <h3>Cierre</h3>
-            <p>El sistema anterior queda en solo lectura, como histórico consultable.</p>
-          </div>
-          <p class="phase-check"><span class="mono">verificación</span> Periodo acordado sin diferencias</p>
+          <span class="phase-n mono">04</span>
+          <h3>Cierre</h3>
+          <p>El sistema anterior queda en solo lectura, como histórico consultable.</p>
+          <p class="check mono"><span aria-hidden="true">✓</span> sin diferencias</p>
         </li>
       </ol>
     </div>
@@ -177,40 +200,40 @@
   <section id="stack" class="section">
     <div class="section-rail">
       <span class="mono">STACK</span>
-      <span class="status">verificado</span>
+      <span class="chip ok">verificado</span>
     </div>
     <div class="section-body">
       <h2>Lo que efectivamente usamos.</h2>
       <dl class="specs">
         <div>
-          <dt>Backend</dt>
-          <dd>.NET 11 <span class="mono">STS · soporte hasta nov 2028</span></dd>
+          <dt class="mono">Backend</dt>
+          <dd>.NET 11<span class="note mono">STS · hasta nov 2028</span></dd>
         </div>
         <div>
-          <dt>Frontend</dt>
-          <dd>Angular 22 con SSR</dd>
+          <dt class="mono">Frontend</dt>
+          <dd>Angular 22<span class="note mono">SSR</span></dd>
         </div>
         <div>
-          <dt>Datos</dt>
-          <dd>SQL Server 2025 <span class="mono">Express en on-premise · 10 GB por base</span></dd>
+          <dt class="mono">Datos</dt>
+          <dd>SQL Server 2025<span class="note mono">Express · 10 GB por base</span></dd>
         </div>
         <div>
-          <dt>Entrega</dt>
-          <dd>Docker Compose <span class="mono">una instancia por cliente</span></dd>
+          <dt class="mono">Entrega</dt>
+          <dd>Docker Compose<span class="note mono">una instancia por cliente</span></dd>
         </div>
         <div>
-          <dt>Calidad</dt>
-          <dd>CI en cada push <span class="mono">build + tests</span></dd>
+          <dt class="mono">Calidad</dt>
+          <dd>CI en cada push<span class="note mono">build + tests</span></dd>
         </div>
       </dl>
       <p class="footnote">El mismo stack que está corriendo este sitio, no una lista de deseos.</p>
     </div>
   </section>
 
-  <section id="limites" class="section section-plain">
+  <section id="limites" class="section">
     <div class="section-rail">
       <span class="mono">LÍMITES</span>
-      <span class="status red">explícitos</span>
+      <span class="chip bad">explícitos</span>
     </div>
     <div class="section-body">
       <h2>Lo que no hacemos.</h2>
@@ -221,7 +244,7 @@
         </li>
         <li>
           <strong>No publicamos testimonios ni métricas que no podamos respaldar.</strong>
-          Hoy no tenemos ninguno. Cuando los tengamos, aparecerán aquí con nombre y fecha.
+          Hoy no tenemos ninguno. Cuando los tengamos, aparecerán con nombre y fecha.
         </li>
         <li>
           <strong>No damos plazo ni precio sin inventario previo.</strong>
@@ -234,7 +257,7 @@
   <section id="contacto" class="section section-contact">
     <div class="section-rail">
       <span class="mono">CONTACTO</span>
-      <span class="status">abierto</span>
+      <span class="chip ok">abierto</span>
     </div>
     <div class="section-body">
       <h2>Cuéntanos qué sistema te está frenando.</h2>
@@ -248,6 +271,8 @@
 </main>
 
 <footer class="foot">
-  <span>FactoriaLabs · Santiago, Chile</span>
-  <span class="mono">© 2026</span>
+  <div class="foot-inner">
+    <span>FactoriaLabs · Santiago, Chile</span>
+    <span class="mono">BUILD f25ff56 · © 2026</span>
+  </div>
 </footer>

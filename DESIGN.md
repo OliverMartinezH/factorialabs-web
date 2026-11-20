@@ -4,86 +4,95 @@ Sistema visual de la portada de FactoriaLabs. Registra lo construido, no lo plan
 
 ## World
 
-**Hoja de checklist de bodega.** El sitio se lee como una hoja de conteo: papel cuadriculado,
-reglas trazadas, casillas que se marcan y lápiz rojo para lo que falta. Traduce el mecanismo del
-producto —modernizar por fases verificables, sin apagar nada hasta que cuadre— a un artefacto que el
-dueño de una PyME usa a diario.
+**Panel de instrumentación en cutover.** La página se comporta como una consola que mide la
+paridad entre el sistema viejo y el nuevo: dos columnas, tres cifras, una diferencia que llega a
+cero. No promete resultados, los instrumenta.
 
-Rechaza de forma explícita los dos polos del rubro: el sitio oscuro con acentos neón y tarjetas de
-servicios, y su opuesto de agencia en crema con serif editorial.
+Reemplaza el mundo anterior (hoja de checklist en papel). La barra de calidad son Linear y
+Stripe/Cloudflare: negro, tipografía grande, precisión y datos animados, sin gradientes de texto ni
+glass decorativo.
 
 ## Tokens
 
 | Token | Valor | Uso |
 |---|---|---|
-| `--paper` | `#f2efe6` | Fondo |
-| `--paper-deep` | `#e7e2d4` | Superficies: tablero, hover de filas |
-| `--ink` | `#1a1e1a` | Texto y líneas fuertes |
-| `--ink-soft` | `#586057` | Texto secundario (contraste ≈ 6:1 sobre paper) |
-| `--rule` | `#c6c0ae` | Reglas y bordes |
-| `--rule-soft` | `#d8d3c3` | Reglas internas de tablas |
-| `--red` | `#ab3427` | Pendiente / error / foco |
-| `--green` | `#2c5a43` | Verificado |
-| `--max` | `1160px` | Ancho de contenido |
-| `--gutter` | `clamp(1.25rem, 4vw, 3.5rem)` | Margen lateral |
+| `--bg` | `#07080a` | Fondo |
+| `--bg-2` | `#0b0d11` | Alterno |
+| `--panel` | `#101319` | Superficies, inputs, tarjetas |
+| `--panel-2` | `#161a21` | Hover de superficies |
+| `--line` | `#20252e` | Bordes |
+| `--line-soft` | `#171b22` | Separadores internos |
+| `--fg` | `#edeae3` | Texto principal (blanco cálido, no puro) |
+| `--fg-dim` | `#9ba1aa` | Texto secundario (≈8:1 sobre bg) |
+| `--fg-faint` | `#767d88` | Metadatos (≈5.4:1 sobre bg) |
+| `--accent` | `#ffb020` | Ámbar: señal, estado, acción |
+| `--ok` | `#6ee7a8` | Paridad verificada |
+| `--bad` | `#e5484d` | Límite explícito y error |
 
-Fondo: cuadrícula de 32 px con líneas `rgba(26,30,26,.045)` en ambos ejes, como papel de conteo.
+Fondo global: dos `radial-gradient` de baja opacidad (ámbar arriba a la derecha, azul frío a la
+izquierda) sobre el negro. Sin cuadrículas decorativas.
 
 ## Tipografía
 
-- **Display:** Barlow Semi Condensed 700, `line-height .98`, `letter-spacing -.02em`.
-- **Texto:** Barlow 400/500/600, base `clamp(1rem, .62rem + 1.2vw, 1.125rem)`.
-- **Datos y códigos:** Azeret Mono 400/500, `font-variant-numeric: tabular-nums`.
+- **Display y texto:** Archivo 400/500/600/700, `line-height .95` en titulares, `-.035em`.
+- **Datos:** Azeret Mono 400/500, `tabular-nums`, para cifras, etiquetas y metadatos.
+- Escala: `h1 clamp(2.6rem, 5.4vw, 4.55rem)`, `h2 clamp(1.9rem, 3.3vw, 2.75rem)`.
 
-La mono solo aparece en folios, etiquetas de estado, números de fase y valores de stack.
+La mono solo aparece donde hay una medición, un código o una etiqueta de estado.
 
 ## Estructura
 
-- Contenedor máximo 1160 px con `--gutter` a los lados.
-- Secciones en dos columnas: riel de 170 px con etiqueta mono + cuerpo. Bajo 900 px el riel pasa a
-  fila horizontal sobre el cuerpo.
-- Cada sección abre con una regla de 1 px (`--rule`). La sección de contacto usa 2 px de tinta.
-- Espaciado vertical: `clamp(2.75rem, 5vw, 4rem)` por sección; siempre más aire sobre un título que
-  bajo él.
+- Contenedor 1200 px, `--gutter` lateral.
+- Secciones en dos columnas: riel de 170 px (etiqueta mono + chip de estado) y cuerpo. Bajo 980 px
+  el riel pasa a fila horizontal.
+- Separación entre secciones: `clamp(3.5rem, 7vw, 5.5rem)`, con regla de 1 px arriba.
+- Hero a dos columnas (copy 1.05fr / panel 0.95fr), centrado verticalmente.
 
 ## Componentes
 
 | Componente | Regla |
 |---|---|
-| `.board` | Panel de diagnóstico: borde de tinta, sombra `6px 8px 0 rgba(26,30,26,.07)`, rotación `-.4deg` solo en escritorio |
-| `.checklist` | Filas `1.25rem / 1fr / auto`; casilla de 1.1 rem; borde punteado entre filas |
-| `.ledger` | Tabla origen → destino con número mono, flecha y estado a la derecha |
-| `.phases` | Lista numerada `2.25rem / 1fr / 15rem`, con columna de verificación |
-| `.specs` | Definiciones `130px / 1fr` con etiqueta mono en mayúsculas |
-| `.limits` | Ítems con casilla roja vacía dibujada en `::before`, nunca un ícono de librería |
-| Formulario | Solo línea inferior de 1 px; foco y error cambian el borde a rojo |
+| `.panel` | Consola de paridad: borde `--line`, radio 12 px, gradiente vertical sutil, scanline ámbar de 5.5 s |
+| `.metrics` | Filas `1fr auto auto 1rem`; el valor nuevo es brillante, el legacy atenuado; el check verde entra escalonado |
+| `.ticker` | Banda de stack con marquee de 34 s y máscara de degradado en los bordes |
+| `.migrate` | Diagrama de 3 fuentes que convergen en una tarjeta destino con borde ámbar y glow |
+| `.phases` | Rejilla de 5 columnas con número mono, y verificación en verde al pie |
+| `.specs` | Dos columnas de definiciones `105px / 1fr`, etiqueta mono en mayúsculas |
+| `.limits` | Tres afirmaciones con casilla roja dibujada en `::before` |
+| Formulario | Inputs sobre `--panel`, borde `--line`, foco ámbar con halo suave |
 
-Sin tarjetas anidadas, sin grillas de icono + título + texto, sin degradados de texto, sin
-glassmorphism decorativo.
+Sin tarjetas anidadas, sin grillas de icono + título + texto, sin degradado en texto, sin blur
+decorativo.
 
 ## Movimiento
 
-Un solo momento orquestado: el tablero entra con `board-in` (700 ms, `cubic-bezier(.16,1,.3,1)`) y
-las casillas verificadas se estampan con `stamp` (420 ms, escala `1.35 → .96 → 1`). Todo se anula
-bajo `prefers-reduced-motion: reduce`.
+Un momento orquestado, todo desde un estado ya visible:
+
+1. La scanline del panel recorre la consola cada 5.5 s.
+2. Los checks de paridad entran a 0.9 s, 1.35 s y 1.8 s (`check-in`, 480 ms).
+3. El ticker se desplaza de forma continua.
+4. Hover: `translateY(-1px)` en botones y cambio de borde en tarjetas.
+
+Nada de contenido oculto esperando scroll. Todo se anula bajo `prefers-reduced-motion: reduce`.
 
 ## Estados y superficies del navegador
 
-- Selección de texto: fondo tinta, texto papel.
-- Foco: `outline: 2px solid var(--red)`, `offset: 3px`.
-- Scrollbar: `scrollbar-color: var(--rule) transparent`, delgada.
-- Formulario: `idle / sending / sent / error`, anunciados por `role="status" aria-live="polite"`.
-- Errores por campo con `aria-invalid` y mensaje propio; nunca solo color.
+- Selección: fondo ámbar, texto negro.
+- Foco: `outline: 2px solid var(--accent)`, `offset: 3px`.
+- Scrollbar: `#2a303a` sobre transparente, delgada.
+- Formulario: `idle / sending / sent / error`, anunciado por `role="status" aria-live="polite"`.
+- Errores con `aria-invalid` y mensaje bajo el campo; nunca solo color.
 
 ## Responsive
 
 | Corte | Cambio |
 |---|---|
-| ≤ 900 px | Hero a una columna, tablero sin rotación, secciones a una columna |
-| ≤ 640 px | Nav secundaria oculta, tabla se vuelve bloques, especificaciones apiladas |
+| ≤ 980 px | Hero a una columna; panel limitado a 34 rem; secciones a una columna; fases a 2 columnas |
+| ≤ 720 px | Nav secundaria oculta; diagrama de migración apilado con conector vertical; fases a 1 columna |
 
 ## Reglas
 
 1. Ningún dato comercial inventado: sin precios, plazos, clientes ni métricas.
-2. El rojo significa pendiente o error; el verde, verificado. No se usan para decorar.
+2. El ámbar señala lo que está en curso o requiere acción; el verde, paridad verificada; el rojo,
+   límites y errores.
 3. Cada sección demuestra un hecho verificable del método o del stack.
