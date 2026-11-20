@@ -1,4 +1,4 @@
-# Detiene y elimina los contenedores (los datos de SQL se conservan en el volumen).
+# Detiene y elimina los contenedores.
 $ErrorActionPreference = 'Stop'
 Set-Location $PSScriptRoot
-docker compose --env-file .env down
+docker compose down
