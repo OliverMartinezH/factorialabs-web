@@ -20,6 +20,9 @@ EXPOSE 8080
 
 COPY --from=build /app/publish .
 
+# Directorio de datos con el dueño correcto para que el volumen escriba como APP_UID.
+RUN mkdir -p /app/data && chown -R $APP_UID /app/data
+
 USER $APP_UID
 
 ENTRYPOINT ["dotnet", "FactoriaLabs.Api.dll"]

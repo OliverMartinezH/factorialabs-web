@@ -1,8 +1,10 @@
 using System.Reflection;
+using FactoriaLabs.Api.Leads;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
+builder.Services.AddSingleton<LeadStore>();
 
 builder.Services.AddCors(options =>
 {
@@ -42,7 +44,11 @@ app.MapGet("/api/info", () => Results.Ok(new
     framework = ".NET 11"
 }));
 
-app.MapPost("/api/contact", (ContactRequest request, ILogger<Program> logger) =>
+app.MapPost("/api/contact", async (
+    ContactRequest request,
+    LeadStore store,
+    ILogger<Program> logger,
+    CancellationToken cancellationToken) =>
 {
     var errors = new Dictionary<string, string[]>();
 
@@ -66,13 +72,22 @@ app.MapPost("/api/contact", (ContactRequest request, ILogger<Program> logger) =>
         return Results.ValidationProblem(errors);
     }
 
-    // TODO: persistir en SQL Server cuando exista el modelo de leads.
+    var lead = new Lead(
+        request.Name!.Trim(),
+        request.Email!.Trim(),
+        request.Company?.Trim(),
+        request.CurrentSystem?.Trim(),
+        request.Message!.Trim(),
+        DateTimeOffset.UtcNow);
+
+    await store.SaveAsync(lead, cancellationToken);
+
     logger.LogInformation(
-        "Lead recibido: {Name} <{Email}> · empresa: {Company} · sistema: {System}",
-        request.Name,
-        request.Email,
-        request.Company ?? "-",
-        request.CurrentSystem ?? "-");
+        "Lead guardado: {Name} <{Email}> · empresa: {Company} · sistema: {System}",
+        lead.Name,
+        lead.Email,
+        lead.Company ?? "-",
+        lead.CurrentSystem ?? "-");
 
     return Results.Created("/api/contact", new { received = true });
 });
@@ -80,11 +95,11 @@ app.MapPost("/api/contact", (ContactRequest request, ILogger<Program> logger) =>
 app.Run();
 
 public record ContactRequest(
-    string Name,
-    string Email,
+    string? Name,
+    string? Email,
     string? Company,
     string? CurrentSystem,
-    string Message);
+    string? Message);
 
 // Expuesto para WebApplicationFactory en los tests de integración.
 public partial class Program;

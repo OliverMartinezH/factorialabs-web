@@ -59,6 +59,9 @@ desktop.ini
 *.tmp
 logs/
 
+# ===== Datos locales =====
+data/
+
 # ===== Artefactos de herramientas locales =====
 .impeccable/shots/
 .impeccable/mocks/

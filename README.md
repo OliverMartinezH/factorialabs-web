@@ -87,8 +87,26 @@ npm test
 | GET | `/api/info` | Información del servicio |
 | POST | `/api/contact` | Recibe el formulario del sitio y valida los campos |
 
-`POST /api/contact` **hoy no persiste**: registra el lead en el log del contenedor. Cuando se
-necesite, se agrega el servicio de base de datos y el almacenamiento en la API.
+`POST /api/contact` valida los campos y **agrega el lead a un archivo JSON**, sin base de datos.
+
+### Dónde quedan los leads
+
+El archivo vive en el volumen `factorialabs-leads`, montado en `/app/data/leads.json` dentro del
+contenedor. Sobrevive a reinicios y a `docker compose down`.
+
+```powershell
+# leer
+docker exec factorialabs-api cat /app/data/leads.json
+
+# respaldar a tu máquina
+docker cp factorialabs-api:/app/data/leads.json ".\leads-$(Get-Date -Format yyyyMMdd).json"
+```
+
+Formato: arreglo JSON con `Name`, `Email`, `Company`, `CurrentSystem`, `Message` y `ReceivedAt`
+(UTC). La escritura usa exclusión mutua y reemplazo atómico del archivo, pensada para bajo volumen.
+
+> Si algún día se necesita consultar, filtrar o crecer, se cambia `LeadStore` por un repositorio
+> sobre SQL Server sin tocar el endpoint.
 
 ## Despliegue
 

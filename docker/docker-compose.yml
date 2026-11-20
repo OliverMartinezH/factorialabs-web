@@ -14,6 +14,8 @@ services:
       ASPNETCORE_URLS: http://+:8080
     ports:
       - "5080:8080"
+    volumes:
+      - factorialabs-leads:/app/data
     restart: unless-stopped
 
   factorialabs-web:
@@ -30,3 +32,6 @@ services:
     depends_on:
       - factorialabs-api
     restart: unless-stopped
+
+volumes:
+  factorialabs-leads:
