@@ -1,0 +1,58 @@
+name: factorialabs
+
+# Orden de arranque: db -> api -> web
+# Dev local: usa SQL Server 2025 Developer (gratis, sin límite de 10 GB).
+# Producción on-premise: SQL Server Express instalado nativo (límite 10 GB por BD).
+
+services:
+  factorialabs-db:
+    image: mcr.microsoft.com/mssql/server:2025-latest
+    container_name: factorialabs-db
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?define MSSQL_SA_PASSWORD en docker/.env}
+    ports:
+      - "14330:1433"
+    volumes:
+      - factorialabs-sqldata:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/127.0.0.1/1433'"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    restart: unless-stopped
+
+  factorialabs-api:
+    build:
+      context: ../src/FactoriaLabs.Api
+      dockerfile: Dockerfile
+    container_name: factorialabs-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Default: "Server=factorialabs-db,1433;Database=FactoriaLabs;User Id=sa;Password=${MSSQL_SA_PASSWORD};Encrypt=True;TrustServerCertificate=True"
+    ports:
+      - "5080:8080"
+    depends_on:
+      factorialabs-db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  factorialabs-web:
+    build:
+      context: ../src/FactoriaLabs.Web
+      dockerfile: Dockerfile
+    container_name: factorialabs-web
+    environment:
+      PORT: 4000
+      NODE_ENV: production
+    ports:
+      - "4200:4000"
+    depends_on:
+      - factorialabs-api
+    restart: unless-stopped
+
+volumes:
+  factorialabs-sqldata:

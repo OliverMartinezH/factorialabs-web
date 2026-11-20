@@ -1,0 +1,60 @@
+# ===== .NET =====
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+*.dbmdl
+TestResults/
+[Dd]ebug/
+[Rr]elease/
+artifacts/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+*.received.*
+
+# ===== Node / Angular =====
+node_modules/
+dist/
+.angular/
+coverage/
+npm-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ===== Secretos y configuración local =====
+.env
+.env.*
+!.env.example
+appsettings.Local.json
+appsettings.*.Local.json
+*.key
+*.pem
+*.p12
+*.jks
+secrets/
+credentials/
+
+# ===== SQL Server local =====
+*.mdf
+*.ldf
+*.ndf
+*.bak
+
+# ===== Editores / OS =====
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== Logs / temporales =====
+*.log
+*.tmp
+logs/
