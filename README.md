@@ -51,6 +51,10 @@ cd docker
 cp .env.example .env        # define MSSQL_SA_PASSWORD
 docker compose up --build
 
+# o simplemente
+.\up.ps1
+.\down.ps1
+
 # API  -> http://localhost:5080/health
 # Web  -> http://localhost:4200
 # SQL  -> localhost,14341
