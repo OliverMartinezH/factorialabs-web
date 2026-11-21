@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="FactoriaLabs">
+  <rect width="64" height="64" rx="12" fill="#5b4bff"/>
+  <path d="M16 44 L26 30 L34 38 L48 20"
+        fill="none" stroke="#ffffff" stroke-width="6"
+        stroke-linecap="square" stroke-linejoin="miter"/>
+</svg>

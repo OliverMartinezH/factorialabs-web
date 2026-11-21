@@ -26,6 +26,9 @@ una conversación concreta. El éxito es un lead calificado, no tráfico.
 
 * El sitio publica solo afirmaciones verificables: hoy no existen testimonios, métricas ni clientes
   citables.
+* El servicio cubre el ciclo completo: diagnóstico, migración de datos, construcción, puesta en
+  marcha y soporte posterior. No se entrega y se desaparece.
+* La IA es la forma de trabajo, no el producto: acelera inventario, pruebas y migración.
 * El formulario es el canal de captación propio; el correo directo es la alternativa.
 * Cada lead se registra con fecha, empresa y sistema actual declarado.
 
@@ -38,8 +41,9 @@ una conversación concreta. El éxito es un lead calificado, no tráfico.
 ## Módulos
 
 * Portada: titular, panel de paridad y acciones.
+* Alcance: qué se moderniza (web, escritorio, móvil), sin imponer destino.
 * Caso 001: migración en curso de tres sistemas ASP + Access.
-* Método: cinco fases con verificación explícita.
+* Método: cinco fases con verificación explícita y nota de desarrollo asistido por IA.
 * Stack: lo que efectivamente se usa.
 * Límites: lo que no se hace.
 * Preguntas frecuentes sobre software legado.

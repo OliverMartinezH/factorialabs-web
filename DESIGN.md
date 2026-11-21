@@ -59,6 +59,9 @@ La mono solo aparece donde hay una medición, un código o una etiqueta de estad
 | `.phases` | Rejilla de 5 columnas con número mono y verificación en verde al pie |
 | `.specs` | Dos columnas de definiciones `105px / 1fr`, etiqueta mono en mayúsculas |
 | `.limits` | Tres afirmaciones con casilla roja dibujada en `::before` |
+| `.faq` | Acordeón nativo con `<details>`; el signo es mono y violeta |
+| `.services` | Tres tarjetas de alcance, borde `--line`, hover con borde violeta |
+| `.ai-note` | Bloque de método con etiqueta mono violeta y tinte suave |
 | Formulario | Inputs blancos con borde `--line`, foco violeta con halo de 3 px |
 
 Sin tarjetas anidadas, sin grillas de icono + título + texto, sin degradado en texto, sin blur

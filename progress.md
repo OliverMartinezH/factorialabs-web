@@ -31,15 +31,22 @@
 - [ ] **2.3.** Reemplazar email y WhatsApp placeholder
 - [ ] **2.4.** Verificar un envío real de punta a punta
 
-### Fase 3: Dominio y contenido
-- [ ] **3.1.** Dominio propio `factorialabs.cl` con `CNAME`
-- [ ] **3.2.** Ajustar `baseHref`, canonical y sitemap al dominio
-- [ ] **3.3.** Publicar el caso 001 con nombre cuando el cliente autorice
+### Fase 3: Contenido y marca
+- [x] **3.1.** Sección de alcance (web, escritorio, móvil) sin destino impuesto
+- [x] **3.2.** Ciclo completo y soporte en el copy
+- [x] **3.3.** Nota de desarrollo asistido por IA
+- [x] **3.4.** Favicon propio y `og:image` 1200×630
+- [ ] **3.5.** Publicar el caso 001 con nombre cuando el cliente autorice
+
+### Fase 4: Dominio
+- [ ] **4.1.** Dominio propio `factorialabs.cl` con `CNAME`
+- [ ] **4.2.** Ajustar `baseHref`, canonical y sitemap al dominio
 
 ---
 
 ## 3. Recent Iterations
 
+* 21/11/2026 — Sección de alcance, ciclo completo con soporte, nota de IA, favicon y `og:image`.
 * 21/11/2026 — Gobernanza inicializada con okk-init.
 * 21/11/2026 — Build estático, SEO con cinco términos objetivo y deploy en Pages.
 * 21/11/2026 — Eliminado el backend .NET y la base de datos por simplicidad.
