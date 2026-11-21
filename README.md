@@ -27,9 +27,13 @@ correo.
 ```
 .
 ├─ src/FactoriaLabs.Web/
-│  ├─ src/app/            portada, secciones y formulario
-│  ├─ src/index.html      meta, Open Graph y JSON-LD
-│  ├─ public/             robots.txt, sitemap.xml, favicon
+│  ├─ src/app/
+│  │  ├─ home/            portada
+│  │  ├─ stack/           página /stack
+│  │  ├─ contact/         formulario
+│  │  ├─ shared/          header y footer
+│  │  └─ core/            configuración, SEO
+│  ├─ public/             robots.txt, sitemap.xml, favicon, og-image
 │  ├─ Dockerfile          vista previa local con nginx
 │  └─ nginx.conf
 ├─ docker/docker-compose.yml
@@ -70,20 +74,48 @@ const SHEET_ID = 'ID_DE_TU_PLANILLA';
 const TO = 'hola@factorialabs.cl';
 
 function doPost(e) {
-  const d = JSON.parse(e.postData.contents);
+  let d;
+  try { d = JSON.parse(e.postData.contents); } catch (error) { return ok(); }
 
-  SpreadsheetApp.openById(SHEET_ID).getSheetByName('Leads')
-    .appendRow([new Date(), d.name, d.email, d.company, d.currentSystem, d.message, d.source]);
+  // 1) Campo trampa: si viene relleno, es un bot.
+  if (d.website) return ok();
 
-  MailApp.sendEmail({
-    to: TO,
-    replyTo: d.email,
-    subject: `Nuevo contacto: ${d.company || d.name}`,
-    htmlBody: `<b>${d.name}</b> — ${d.email}<br>
-               Empresa: ${d.company || '—'}<br>
-               Sistema actual: ${d.currentSystem || '—'}<p>${d.message}</p>`,
-  });
+  const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName('Leads');
 
+  // 2) Duplicado reciente: mismo email en las últimas 20 filas.
+  const last = sheet.getLastRow();
+  if (last > 1) {
+    const rows = Math.min(20, last - 1);
+    const emails = sheet.getRange(last - rows + 1, 3, rows, 1).getValues().flat();
+    if (emails.some((v) => String(v).toLowerCase() === String(d.email).toLowerCase())) return ok();
+  }
+
+  // 3) Registrar el lead.
+  sheet.appendRow([
+    new Date(),
+    d.name,
+    d.email,
+    d.company || '',
+    d.currentSystem || '',
+    d.message,
+  ]);
+
+  // 4) Aviso por correo. Se omite si el envío fue demasiado rápido.
+  if (Number(d.elapsed || 0) >= 2000) {
+    MailApp.sendEmail({
+      to: TO,
+      replyTo: d.email,
+      subject: `Nuevo contacto: ${d.company || d.name}`,
+      htmlBody: `<b>${d.name}</b> — ${d.email}<br>
+                 Empresa: ${d.company || '—'}<br>
+                 Sistema actual: ${d.currentSystem || '—'}<p>${d.message}</p>`,
+    });
+  }
+
+  return ok();
+}
+
+function ok() {
   return ContentService.createTextOutput('ok');
 }
 ```
@@ -103,18 +135,29 @@ export const CONTACT = {
 
 Sin `formEndpoint` el formulario abre el correo del visitante (`mailto:`).
 
+### Antispam y privacidad
+
+- **Campo trampa:** si un bot lo rellena, el lead se descarta sin dejar rastro.
+- **Duplicados:** el mismo email no se registra dos veces en las últimas 20 filas.
+- **Sin correo de confirmación al visitante:** evita que el script funcione como relay de spam.
+- **Sin blocklist:** si el spam aparece, se agrega después.
+- La planilla queda **privada** en tu cuenta. El repo solo contiene la URL del endpoint, que es
+  pública por naturaleza: el navegador del visitante tiene que poder llamarla.
+
 ### Límites conocidos
 
 - `mode: 'no-cors'` (Apps Script no expone CORS): el sitio no puede leer la respuesta. Si el script
   falla, el visitante igual ve "enviado". Conviene revisar la planilla al comienzo.
 - Cuota de correo: 100 destinatarios/día con Gmail personal, 1.500/día con Workspace.
-- El endpoint es público: usar un campo trampa y filtrar duplicados en el script.
+- Apps Script no entrega la IP del visitante: cualquier filtrado se basa en el contenido, no en el
+  origen.
 
 ## SEO
 
 - `<title>` y `<h1>` con los términos: **software legacy**, **modernización**, **migración de
   datos**, **aplicación heredada**, **software legado**.
-- Sección de preguntas frecuentes con datos estructurados `FAQPage` y `Organization`.
+- Dos páginas prerenderizadas: `/` (negocio) y `/stack/` (arquitectura), cada una con su title,
+  canonical y JSON-LD.
 - `robots.txt` y `sitemap.xml` en `public/`.
 
 ## Despliegue

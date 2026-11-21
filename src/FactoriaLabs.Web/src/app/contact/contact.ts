@@ -11,6 +11,8 @@ interface ContactPayload {
   email: string;
   currentSystem: string;
   message: string;
+  website: string;
+  elapsed: number;
 }
 
 @Component({
@@ -21,6 +23,7 @@ interface ContactPayload {
 })
 export class Contact {
   private readonly fb = inject(FormBuilder);
+  private readonly startedAt = Date.now();
 
   protected readonly status = signal<Status>('idle');
   protected readonly errorMessage = signal('');
@@ -31,6 +34,8 @@ export class Contact {
     email: ['', [Validators.required, Validators.email]],
     currentSystem: [''],
     message: ['', [Validators.required, Validators.minLength(12)]],
+    // Campo trampa: invisible para personas, irresistible para bots.
+    website: [''],
   });
 
   protected readonly email = CONTACT.email;
@@ -57,7 +62,19 @@ export class Contact {
       return;
     }
 
-    const payload = this.form.getRawValue();
+    const form = this.form.getRawValue();
+
+    // Si el campo trampa viene relleno, se simula éxito y no se envía nada.
+    if (form.website.trim().length > 0) {
+      this.status.set('sent');
+      this.form.reset();
+      return;
+    }
+
+    const payload: ContactPayload = {
+      ...form,
+      elapsed: Date.now() - this.startedAt,
+    };
 
     if (!CONTACT.formEndpoint) {
       this.sendByEmail(payload);
@@ -74,7 +91,7 @@ export class Contact {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ ...payload, source: 'factorialabs-web' }),
+      body: JSON.stringify(payload),
     })
       .then(() => {
         this.status.set('sent');

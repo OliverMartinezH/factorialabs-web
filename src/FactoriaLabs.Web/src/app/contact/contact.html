@@ -56,6 +56,11 @@
       }
     </label>
 
+    <div class="trap" aria-hidden="true">
+      <label for="website">No completar este campo</label>
+      <input id="website" type="text" formControlName="website" tabindex="-1" autocomplete="off" />
+    </div>
+
     <div class="submit-row">
       <button class="btn" type="submit" [disabled]="status() === 'sending'">
         @if (status() === 'sending') {
