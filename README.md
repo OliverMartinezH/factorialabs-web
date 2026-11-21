@@ -1,10 +1,9 @@
 # FactoriaLabs
 
-Sitio web corporativo y base tecnológica de **FactoriaLabs** — software factory con desarrollo
-asistido por IA.
+Sitio web corporativo de **FactoriaLabs** — software factory con desarrollo asistido por IA.
 
-Monorepo con el sitio público (Angular 22 + SSR) y la API (ASP.NET Core 11), empaquetados con
-Docker bajo el proyecto Compose `factorialabs`.
+Un solo servicio: **Angular 22 con SSR**, cuya capa Express expone el formulario de contacto y
+persiste los leads en un archivo JSON. Sin base de datos.
 
 ---
 
@@ -13,35 +12,31 @@ Docker bajo el proyecto Compose `factorialabs`.
 | Capa | Tecnología | Versión |
 |---|---|---|
 | Frontend | Angular + SSR | 22.3 |
-| Lenguaje web | TypeScript | 6.0 |
-| Backend | ASP.NET Core (minimal API) | .NET 11 |
-| Base de datos | — (sin persistencia por ahora) | — |
-| Testing | Vitest / xUnit | — |
-| Contenedores | Docker Compose | — |
+| Lenguaje | TypeScript | 6.0 |
+| API | Express (dentro del servidor SSR) | 5 |
+| Persistencia | JSON en volumen Docker | — |
+| Testing | Vitest | 5 |
+| Contenedores | Docker Compose | 1 servicio |
 
-> .NET 11 es **STS**, con soporte hasta noviembre de 2028.
 > TypeScript 7 existe, pero Angular 22.3 fija `>=6.0 <6.1`.
 
 ## Estructura
 
 ```
 .
-├─ src/
-│  ├─ FactoriaLabs.Web/      Angular 22 + SSR (Express)
-│  └─ FactoriaLabs.Api/      ASP.NET Core 11
-├─ tests/
-│  └─ FactoriaLabs.Api.Tests/ xUnit
+├─ src/FactoriaLabs.Web/
+│  ├─ src/app/            componentes (portada, contacto)
+│  ├─ src/server/         validación y almacenamiento de leads
+│  ├─ src/server.ts       rutas HTTP + SSR
+│  └─ Dockerfile
 ├─ docker/
-│  ├─ docker-compose.yml      proyecto: factorialabs
+│  ├─ docker-compose.yml  proyecto: factorialabs
 │  └─ .env.example
-├─ .github/workflows/ci.yml
-├─ FactoriaLabs.slnx            solución .NET (formato XML nuevo)
-└─ global.json
+└─ .github/workflows/ci.yml
 ```
 
 ## Requisitos
 
-- .NET SDK 11 (`dotnet --version` → 11.0.100)
 - Node 26 LTS (`node --version` → v26.x)
 - Docker Desktop con contenedores Linux
 
@@ -49,77 +44,65 @@ Docker bajo el proyecto Compose `factorialabs`.
 
 ```bash
 cd docker
-.\up.ps1        # levanta api + web y muestra las URLs
+.\up.ps1        # levanta el sitio y muestra la URL
 .\down.ps1
 
-# Web  -> http://localhost:4200
-# API  -> http://localhost:5080/health
+# Web + API -> http://localhost:4200
 ```
 
-Trabajo con hot reload (sin contenedores para el código):
+Con hot reload, sin contenedores:
 
 ```bash
-# API
-dotnet watch --project src/FactoriaLabs.Api run
-
-# Web
-cd src/FactoriaLabs.Web && npm start
+cd src/FactoriaLabs.Web
+npm ci
+npm start        # http://localhost:4200
 ```
 
 ## Build y tests
 
 ```bash
-dotnet restore
-dotnet build -c Release
-dotnet test -c Release
-
 cd src/FactoriaLabs.Web
 npm ci
-npm run build      # SSR -> dist/FactoriaLabs.Web/{browser,server}
-npm test
+npm test         # vitest
+npm run build    # SSR -> dist/FactoriaLabs.Web/{browser,server}
 ```
 
 ## Endpoints
 
 | Método | Ruta | Descripción |
 |---|---|---|
-| GET | `/health` | Estado + versión (usar en monitoreo) |
+| GET | `/health` | Estado + versión |
 | GET | `/api/info` | Información del servicio |
-| POST | `/api/contact` | Recibe el formulario del sitio y valida los campos |
-
-`POST /api/contact` valida los campos y **agrega el lead a un archivo JSON**, sin base de datos.
+| POST | `/api/contact` | Valida el formulario y guarda el lead |
 
 ### Dónde quedan los leads
 
-El archivo vive en el volumen `factorialabs-leads`, montado en `/app/data/leads.json` dentro del
-contenedor. Sobrevive a reinicios y a `docker compose down`.
+En el volumen `factorialabs-leads`, montado en `/app/data/leads.json`. Sobrevive a reinicios y a
+`docker compose down`.
 
 ```powershell
 # leer
-docker exec factorialabs-api cat /app/data/leads.json
+docker exec factorialabs-web cat /app/data/leads.json
 
 # respaldar a tu máquina
-docker cp factorialabs-api:/app/data/leads.json ".\leads-$(Get-Date -Format yyyyMMdd).json"
+docker cp factorialabs-web:/app/data/leads.json ".\leads-$(Get-Date -Format yyyyMMdd).json"
 ```
 
-Formato: arreglo JSON con `Name`, `Email`, `Company`, `CurrentSystem`, `Message` y `ReceivedAt`
-(UTC). La escritura usa exclusión mutua y reemplazo atómico del archivo, pensada para bajo volumen.
+Formato: arreglo JSON con `name`, `email`, `company`, `currentSystem`, `message` y `receivedAt`
+(ISO 8601 UTC). Las escrituras se serializan en una cola y el archivo se reemplaza de forma atómica
+(`leads.json.tmp` → `leads.json`).
 
-> Si algún día se necesita consultar, filtrar o crecer, se cambia `LeadStore` por un repositorio
-> sobre SQL Server sin tocar el endpoint.
+> Una sola instancia escribe el archivo. Si algún día se escala horizontalmente, corresponde pasar
+> a SQLite o SQL Server.
 
 ## Despliegue
 
-- **Dev:** Docker Compose con dos servicios (api, web).
-- **Producción (cliente on-premise, Windows Server):** la API se publica como servicio de Windows y
-  el sitio Angular SSR corre como proceso Node. En proyectos de cliente que lo requieran se usa
-  SQL Server Express instalado nativo (límite: 10 GB por base, 1.4 GB de buffer pool, 4 cores).
-
-Cada cliente tiene su propia instancia.
+- **Dev:** Docker Compose con un servicio (`factorialabs-web`).
+- **Producción (Windows Server on-premise):** el sitio corre como proceso Node detrás de IIS o de un
+  reverse proxy; basta con exponer el puerto 4000 y definir `ALLOWED_HOSTS` con el dominio real.
 
 ## Convenciones
 
 - Ramas: `main` protegida, trabajo en `feature/<slug>`.
 - Commits: `feat:`, `fix:`, `chore:`, `docs:`.
-- Nada de secretos en el repo: `.env`, `appsettings.*.Local.json` y llaves quedan fuera por
-  `.gitignore`.
+- Nada de secretos en el repo: `.env`, `data/` y llaves quedan fuera por `.gitignore`.

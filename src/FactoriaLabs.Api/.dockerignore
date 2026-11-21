@@ -1,6 +1,0 @@
-bin/
-obj/
-.vs/
-appsettings.Local.json
-appsettings.*.Local.json
-*.user

@@ -6,10 +6,15 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
+import { validateContact } from './server/contact';
+import { appendLead, leadsFilePath } from './server/leads-store';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
+app.disable('x-powered-by');
+app.use(express.json({ limit: '16kb' }));
+
 const angularApp = new AngularNodeAppEngine({
   // Protección SSRF de Angular: solo estos hosts pueden renderizar SSR.
   // En producción agrega el dominio del cliente en ALLOWED_HOSTS.
@@ -19,21 +24,51 @@ const angularApp = new AngularNodeAppEngine({
     .filter(Boolean),
 });
 
-/**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/{*splat}', (req, res) => {
- *   // Handle API request
- * });
- * ```
- */
+/* ---------- API ---------- */
 
-/**
- * Serve static files from /browser
- */
+app.get('/health', (_req, res) => {
+  res.json({
+    status: 'ok',
+    service: 'factorialabs-web',
+    version: process.env['APP_VERSION'] ?? 'dev',
+    timestamp: new Date().toISOString(),
+  });
+});
+
+app.get('/api/info', (_req, res) => {
+  res.json({
+    name: 'FactoriaLabs',
+    version: process.env['APP_VERSION'] ?? 'dev',
+    runtime: 'Angular SSR + Express',
+  });
+});
+
+app.post('/api/contact', async (req, res) => {
+  const result = validateContact(req.body);
+
+  if (!result.ok) {
+    res.status(400).json({ errors: result.errors });
+    return;
+  }
+
+  const lead = { ...result.lead, receivedAt: new Date().toISOString() };
+
+  try {
+    await appendLead(lead);
+    console.log(`Lead guardado: ${lead.email} (${lead.company ?? 'sin empresa'})`);
+    res.status(201).json({ received: true });
+  } catch (error) {
+    console.error(`No se pudo guardar el lead en ${leadsFilePath()}`, error);
+    res.status(500).json({ error: 'No se pudo guardar el mensaje.' });
+  }
+});
+
+app.use('/api', (_req, res) => {
+  res.status(404).json({ error: 'No encontrado' });
+});
+
+/* ---------- Sitio ---------- */
+
 app.use(
   express.static(browserDistFolder, {
     maxAge: '1y',
@@ -42,9 +77,6 @@ app.use(
   }),
 );
 
-/**
- * Handle all other requests by rendering the Angular application.
- */
 app.use((req, res, next) => {
   angularApp
     .handle(req)
@@ -54,10 +86,6 @@ app.use((req, res, next) => {
     .catch(next);
 });
 
-/**
- * Start the server if this module is the main entry point, or it is ran via PM2.
- * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
- */
 if (isMainModule(import.meta.url) || process.env['pm_id']) {
   const port = process.env['PORT'] || 4000;
   app.listen(port, (error) => {
@@ -65,11 +93,8 @@ if (isMainModule(import.meta.url) || process.env['pm_id']) {
       throw error;
     }
 
-    console.log(`Node Express server listening on http://localhost:${port}`);
+    console.log(`FactoriaLabs escuchando en http://localhost:${port}`);
   });
 }
 
-/**
- * Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.
- */
 export const reqHandler = createNodeRequestHandler(app);

@@ -1,23 +1,8 @@
 name: factorialabs
 
-# Stack local sin base de datos: la API no persiste nada todavía.
-# Cuando se necesite, se agrega el servicio factorialabs-db y su volumen.
+# Un solo servicio: Angular SSR + API Express, con los leads en un volumen JSON.
 
 services:
-  factorialabs-api:
-    build:
-      context: ../src/FactoriaLabs.Api
-      dockerfile: Dockerfile
-    container_name: factorialabs-api
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:8080
-    ports:
-      - "5080:8080"
-    volumes:
-      - factorialabs-leads:/app/data
-    restart: unless-stopped
-
   factorialabs-web:
     build:
       context: ../src/FactoriaLabs.Web
@@ -29,8 +14,8 @@ services:
       ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1,factorialabs-web}
     ports:
       - "4200:4000"
-    depends_on:
-      - factorialabs-api
+    volumes:
+      - factorialabs-leads:/app/data
     restart: unless-stopped
 
 volumes:

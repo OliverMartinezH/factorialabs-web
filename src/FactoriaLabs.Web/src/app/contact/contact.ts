@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { API_BASE_URL, CONTACT } from '../core/config';
+import { CONTACT } from '../core/config';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
+type Field = 'name' | 'email' | 'message';
 
 @Component({
   selector: 'app-contact',
@@ -39,7 +40,7 @@ export class Contact {
     return CONTACT.whatsapp ? 'Escribir por WhatsApp' : 'Escribir por correo';
   }
 
-  protected invalid(field: 'name' | 'email' | 'message'): boolean {
+  protected invalid(field: Field): boolean {
     const control = this.form.controls[field];
     return control.invalid && (control.touched || control.dirty);
   }
@@ -53,17 +54,33 @@ export class Contact {
     this.status.set('sending');
     this.errorMessage.set('');
 
-    this.http.post(`${API_BASE_URL}/api/contact`, this.form.getRawValue()).subscribe({
+    this.http.post('/api/contact', this.form.getRawValue()).subscribe({
       next: () => {
         this.status.set('sent');
         this.form.reset();
       },
-      error: () => {
+      error: (response: HttpErrorResponse) => {
+        this.applyServerErrors(response);
         this.status.set('error');
         this.errorMessage.set(
           `No pudimos enviar el formulario. Escríbenos directo a ${this.email}.`,
         );
       },
     });
+  }
+
+  /** Si el servidor devuelve errores por campo, se marcan en el formulario. */
+  private applyServerErrors(response: HttpErrorResponse): void {
+    const errors = (response.error as { errors?: Record<string, string[]> } | null)?.errors;
+
+    if (!errors) {
+      return;
+    }
+
+    for (const [field, messages] of Object.entries(errors)) {
+      if (field === 'name' || field === 'email' || field === 'message') {
+        this.form.controls[field].setErrors({ server: messages[0] ?? 'Inválido' });
+      }
+    }
   }
 }
