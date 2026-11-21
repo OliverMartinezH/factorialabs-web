@@ -7,4 +7,9 @@ export const CONTACT = {
   email: 'hola@factorialabs.cl',
   /** Opcional: número en formato internacional sin "+", ej. '56912345678'. Vacío = se muestra email. */
   whatsapp: '',
+  /**
+   * URL /exec de la Web App de Google Apps Script que recibe los leads.
+   * Vacío = el formulario abre el correo del visitante (mailto).
+   */
+  formEndpoint: '',
 };

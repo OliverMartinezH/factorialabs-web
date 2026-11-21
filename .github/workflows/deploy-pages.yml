@@ -1,0 +1,58 @@
+name: Deploy a GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build estático
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/FactoriaLabs.Web
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: src/FactoriaLabs.Web/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      - name: Build (SSG)
+        run: npm run build
+
+      - name: Copia de respaldo para rutas desconocidas
+        run: cp dist/FactoriaLabs.Web/browser/index.html dist/FactoriaLabs.Web/browser/404.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: src/FactoriaLabs.Web/dist/FactoriaLabs.Web/browser
+
+  deploy:
+    name: Publicar
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

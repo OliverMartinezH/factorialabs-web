@@ -1,10 +1,17 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CONTACT } from '../core/config';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 type Field = 'name' | 'email' | 'message';
+
+interface ContactPayload {
+  name: string;
+  company: string;
+  email: string;
+  currentSystem: string;
+  message: string;
+}
 
 @Component({
   selector: 'app-contact',
@@ -14,7 +21,6 @@ type Field = 'name' | 'email' | 'message';
 })
 export class Contact {
   private readonly fb = inject(FormBuilder);
-  private readonly http = inject(HttpClient);
 
   protected readonly status = signal<Status>('idle');
   protected readonly errorMessage = signal('');
@@ -51,36 +57,52 @@ export class Contact {
       return;
     }
 
+    const payload = this.form.getRawValue();
+
+    if (!CONTACT.formEndpoint) {
+      this.sendByEmail(payload);
+      return;
+    }
+
     this.status.set('sending');
     this.errorMessage.set('');
 
-    this.http.post('/api/contact', this.form.getRawValue()).subscribe({
-      next: () => {
+    // Apps Script no expone cabeceras CORS: se envía en modo no-cors y no se
+    // puede leer la respuesta. El éxito se asume igual que cualquier formulario
+    // clásico; el antispam y la verificación viven del lado del script.
+    fetch(CONTACT.formEndpoint, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ ...payload, source: 'factorialabs-web' }),
+    })
+      .then(() => {
         this.status.set('sent');
         this.form.reset();
-      },
-      error: (response: HttpErrorResponse) => {
-        this.applyServerErrors(response);
+      })
+      .catch(() => {
         this.status.set('error');
         this.errorMessage.set(
           `No pudimos enviar el formulario. Escríbenos directo a ${this.email}.`,
         );
-      },
-    });
+      });
   }
 
-  /** Si el servidor devuelve errores por campo, se marcan en el formulario. */
-  private applyServerErrors(response: HttpErrorResponse): void {
-    const errors = (response.error as { errors?: Record<string, string[]> } | null)?.errors;
+  /** Sin endpoint configurado, el formulario abre la aplicación de correo. */
+  private sendByEmail(payload: ContactPayload): void {
+    const lines = [
+      `Nombre: ${payload.name}`,
+      `Empresa: ${payload.company || '—'}`,
+      `Email: ${payload.email}`,
+      `Sistema actual: ${payload.currentSystem || '—'}`,
+      '',
+      payload.message,
+    ];
 
-    if (!errors) {
-      return;
-    }
+    const subject = encodeURIComponent(`Consulta de ${payload.name}`);
+    const body = encodeURIComponent(lines.join('\n'));
 
-    for (const [field, messages] of Object.entries(errors)) {
-      if (field === 'name' || field === 'email' || field === 'message') {
-        this.form.controls[field].setErrors({ server: messages[0] ?? 'Inválido' });
-      }
-    }
+    window.location.href = `mailto:${CONTACT.email}?subject=${subject}&body=${body}`;
+    this.status.set('sent');
   }
 }

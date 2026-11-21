@@ -1,6 +1,6 @@
 name: factorialabs
 
-# Un solo servicio: Angular SSR + API Express, con los leads en un volumen JSON.
+# Vista previa local del build estático. El sitio publicado vive en GitHub Pages.
 
 services:
   factorialabs-web:
@@ -8,15 +8,6 @@ services:
       context: ../src/FactoriaLabs.Web
       dockerfile: Dockerfile
     container_name: factorialabs-web
-    environment:
-      PORT: 4000
-      NODE_ENV: production
-      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1,factorialabs-web}
     ports:
-      - "4200:4000"
-    volumes:
-      - factorialabs-leads:/app/data
+      - "4200:80"
     restart: unless-stopped
-
-volumes:
-  factorialabs-leads:

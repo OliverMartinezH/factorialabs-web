@@ -1,27 +1,109 @@
 <!doctype html>
-<html lang="es">
+<html lang="es-CL">
 <head>
   <meta charset="utf-8">
-  <title>FactoriaLabs — El sistema viejo no se apaga hasta que el nuevo cuadra</title>
+  <title>Modernización de software legacy y migración de datos | FactoriaLabs</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Software factory chilena. Modernizamos sistemas legacy (ASP clásico, Access, Excel) hacia .NET 11, Angular y SQL Server, en paralelo y con verificación de datos fase por fase.">
+  <meta name="description" content="Modernizamos software legado y aplicaciones heredadas, y hacemos migración de datos desde Access o Excel hacia .NET 11 y SQL Server. Por fases y sin detener la operación.">
+  <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://olivermartinezh.github.io/factorialabs-web/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_CL">
+  <meta property="og:site_name" content="FactoriaLabs">
+  <meta property="og:title" content="Modernización de software legacy y migración de datos | FactoriaLabs">
+  <meta property="og:description" content="Modernizamos software legado y aplicaciones heredadas, y migramos datos con verificación fase por fase.">
+  <meta property="og:url" content="https://olivermartinezh.github.io/factorialabs-web/">
+  <meta name="twitter:card" content="summary">
+
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Azeret+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://olivermartinezh.github.io/factorialabs-web/#organizacion",
+          "name": "FactoriaLabs",
+          "url": "https://olivermartinezh.github.io/factorialabs-web/",
+          "description": "Software factory especializada en modernización de software legacy, aplicaciones heredadas y migración de datos.",
+          "areaServed": ["CL", "US"],
+          "knowsAbout": [
+            "modernización de software legacy",
+            "software legado",
+            "migración de datos",
+            "aplicación heredada",
+            "ASP clásico",
+            "Microsoft Access",
+            ".NET",
+            "SQL Server"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://olivermartinezh.github.io/factorialabs-web/#preguntas",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "¿Qué es una aplicación heredada o software legado?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Es un sistema que sigue en producción pero ya no se puede mantener con comodidad: ASP clásico, Access, planillas encadenadas. Funciona, pero cada cambio es un riesgo."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Cómo es la migración de datos desde Access a SQL Server?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Se inventarían tablas y consultas, se limpian claves duplicadas y nulos, se migra por etapas y se comparan conteos y totales contra el sistema original antes de usarlo."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Se puede modernizar sin detener la operación?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sí. El sistema antiguo sigue funcionando en paralelo y solo se apaga cuando el nuevo cuadra las mismas cifras."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Trabajan con sistemas en ASP clásico?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sí. Es el origen más común de los proyectos de modernización que tomamos."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Cuánto demora una modernización?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Depende del inventario: no damos plazo ni precio antes de revisar el sistema. Cualquier cifra sin diagnóstico es una apuesta."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  </script>
 </head>
 <body>
 <!--
   THESIS: an instrument panel for a system in cutover — the page measures parity between the old
-  system and the new one instead of promising outcomes; it refuses the paper-agency and the
-  neon-gradient hero alike.
-  OWN-WORLD: near-black ground with a single amber signal, cool grey type, hairline instrument
-  borders, Azeret Mono for every measurement, one green reserved for verified parity.
-  STORY: the old system keeps running, the new one earns the switch by matching its numbers.
-  FIRST VIEWPORT: headline at 4.6rem on the left; on the right a parity panel with legacy and new
-  columns, three metrics matching one by one, ending in DIF 0. Primary action sits under the lede.
+  system and the new one instead of promising outcomes.
+  OWN-WORLD: white ground, one electric violet, hairline borders, Azeret Mono for every measurement,
+  one green reserved for verified parity.
+  STORY: the legacy system keeps running, the new one earns the switch by matching its numbers.
+  FIRST VIEWPORT: headline at 4.55rem on the left; on the right a parity panel with legacy and new
+  columns, three metrics matching one by one, ending in DIF 0.
   FORM: panel-6 (instrument console), seed:5afdee7b59c2e793 (replacement world).
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review,
   the verdict, and DESIGN.md
