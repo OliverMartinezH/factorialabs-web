@@ -1,108 +1,132 @@
 # FactoriaLabs
 
-Sitio web corporativo de **FactoriaLabs** — software factory con desarrollo asistido por IA.
+Sitio web corporativo de **FactoriaLabs** — modernización de software legacy, aplicaciones
+heredadas y migración de datos.
 
-Un solo servicio: **Angular 22 con SSR**, cuya capa Express expone el formulario de contacto y
-persiste los leads en un archivo JSON. Sin base de datos.
+Sitio **100% estático** (Angular 22 con prerender), publicado en GitHub Pages. El formulario de
+contacto envía los leads a Google Sheets mediante una Web App de Apps Script, que además avisa por
+correo.
+
+**En vivo:** https://olivermartinezh.github.io/factorialabs-web/
 
 ---
 
 ## Stack
 
-| Capa | Tecnología | Versión |
-|---|---|---|
-| Frontend | Angular + SSR | 22.3 |
-| Lenguaje | TypeScript | 6.0 |
-| API | Express (dentro del servidor SSR) | 5 |
-| Persistencia | JSON en volumen Docker | — |
-| Testing | Vitest | 5 |
-| Contenedores | Docker Compose | 1 servicio |
-
-> TypeScript 7 existe, pero Angular 22.3 fija `>=6.0 <6.1`.
+| Capa | Tecnología |
+|---|---|
+| Frontend | Angular 22 + prerender (SSG) |
+| Lenguaje | TypeScript 6.0 |
+| Formulario | Google Apps Script → Google Sheets + correo |
+| Testing | Vitest |
+| Deploy | GitHub Actions → GitHub Pages |
+| Local | Docker (nginx) o `ng serve` |
 
 ## Estructura
 
 ```
 .
 ├─ src/FactoriaLabs.Web/
-│  ├─ src/app/            componentes (portada, contacto)
-│  ├─ src/server/         validación y almacenamiento de leads
-│  ├─ src/server.ts       rutas HTTP + SSR
-│  └─ Dockerfile
-├─ docker/
-│  ├─ docker-compose.yml  proyecto: factorialabs
-│  └─ .env.example
-└─ .github/workflows/ci.yml
+│  ├─ src/app/            portada, secciones y formulario
+│  ├─ src/index.html      meta, Open Graph y JSON-LD
+│  ├─ public/             robots.txt, sitemap.xml, favicon
+│  ├─ Dockerfile          vista previa local con nginx
+│  └─ nginx.conf
+├─ docker/docker-compose.yml
+└─ .github/workflows/
+   ├─ ci.yml              tests + build
+   └─ deploy-pages.yml    publicación
 ```
 
-## Requisitos
-
-- Node 26 LTS (`node --version` → v26.x)
-- Docker Desktop con contenedores Linux
-
-## Desarrollo local
-
-```bash
-cd docker
-.\up.ps1        # levanta el sitio y muestra la URL
-.\down.ps1
-
-# Web + API -> http://localhost:4200
-```
-
-Con hot reload, sin contenedores:
+## Desarrollo
 
 ```bash
 cd src/FactoriaLabs.Web
 npm ci
 npm start        # http://localhost:4200
+npm test
+npm run build    # dist/FactoriaLabs.Web/browser
 ```
 
-## Build y tests
+Vista previa del build real (como se sirve en Pages):
 
 ```bash
-cd src/FactoriaLabs.Web
-npm ci
-npm test         # vitest
-npm run build    # SSR -> dist/FactoriaLabs.Web/{browser,server}
+cd docker
+.\up.ps1         # http://localhost:4200
 ```
 
-## Endpoints
+## Formulario de contacto
 
-| Método | Ruta | Descripción |
-|---|---|---|
-| GET | `/health` | Estado + versión |
-| GET | `/api/info` | Información del servicio |
-| POST | `/api/contact` | Valida el formulario y guarda el lead |
+El sitio es estático: no hay backend que guarde leads. El formulario hace `POST` a una Web App de
+Google Apps Script, que agrega la fila a una planilla y envía el aviso por correo.
 
-### Dónde quedan los leads
+### Configurar (una sola vez)
 
-En el volumen `factorialabs-leads`, montado en `/app/data/leads.json`. Sobrevive a reinicios y a
-`docker compose down`.
+1. Crear una planilla en Google Sheets con una hoja llamada `Leads`.
+2. Extensiones → **Apps Script** → pegar:
 
-```powershell
-# leer
-docker exec factorialabs-web cat /app/data/leads.json
+```js
+const SHEET_ID = 'ID_DE_TU_PLANILLA';
+const TO = 'hola@factorialabs.cl';
 
-# respaldar a tu máquina
-docker cp factorialabs-web:/app/data/leads.json ".\leads-$(Get-Date -Format yyyyMMdd).json"
+function doPost(e) {
+  const d = JSON.parse(e.postData.contents);
+
+  SpreadsheetApp.openById(SHEET_ID).getSheetByName('Leads')
+    .appendRow([new Date(), d.name, d.email, d.company, d.currentSystem, d.message, d.source]);
+
+  MailApp.sendEmail({
+    to: TO,
+    replyTo: d.email,
+    subject: `Nuevo contacto: ${d.company || d.name}`,
+    htmlBody: `<b>${d.name}</b> — ${d.email}<br>
+               Empresa: ${d.company || '—'}<br>
+               Sistema actual: ${d.currentSystem || '—'}<p>${d.message}</p>`,
+  });
+
+  return ContentService.createTextOutput('ok');
+}
 ```
 
-Formato: arreglo JSON con `name`, `email`, `company`, `currentSystem`, `message` y `receivedAt`
-(ISO 8601 UTC). Las escrituras se serializan en una cola y el archivo se reemplaza de forma atómica
-(`leads.json.tmp` → `leads.json`).
+3. Implementar → *Nueva implementación* → **Aplicación web**.
+   Ejecutar como: **yo**. Quién tiene acceso: **cualquiera**.
+4. Copiar la URL que termina en `/exec` y pegarla en
+   `src/FactoriaLabs.Web/src/app/core/config.ts`:
 
-> Una sola instancia escribe el archivo. Si algún día se escala horizontalmente, corresponde pasar
-> a SQLite o SQL Server.
+```ts
+export const CONTACT = {
+  email: 'hola@factorialabs.cl',   // ← correo real
+  whatsapp: '',                    // ← ej. '56912345678'
+  formEndpoint: 'https://script.google.com/macros/s/…/exec',
+};
+```
+
+Sin `formEndpoint` el formulario abre el correo del visitante (`mailto:`).
+
+### Límites conocidos
+
+- `mode: 'no-cors'` (Apps Script no expone CORS): el sitio no puede leer la respuesta. Si el script
+  falla, el visitante igual ve "enviado". Conviene revisar la planilla al comienzo.
+- Cuota de correo: 100 destinatarios/día con Gmail personal, 1.500/día con Workspace.
+- El endpoint es público: usar un campo trampa y filtrar duplicados en el script.
+
+## SEO
+
+- `<title>` y `<h1>` con los términos: **software legacy**, **modernización**, **migración de
+  datos**, **aplicación heredada**, **software legado**.
+- Sección de preguntas frecuentes con datos estructurados `FAQPage` y `Organization`.
+- `robots.txt` y `sitemap.xml` en `public/`.
 
 ## Despliegue
 
-- **Dev:** Docker Compose con un servicio (`factorialabs-web`).
-- **Producción (Windows Server on-premise):** el sitio corre como proceso Node detrás de IIS o de un
-  reverse proxy; basta con exponer el puerto 4000 y definir `ALLOWED_HOSTS` con el dominio real.
+Cada push a `main` ejecuta `deploy-pages.yml`: instala, testea, construye con
+`baseHref: /factorialabs-web/` y publica el contenido de `dist/FactoriaLabs.Web/browser`.
+
+Para dominio propio: agregar `CNAME` en `public/` y ajustar `baseHref` a `/`, la URL canónica y el
+`sitemap.xml`.
 
 ## Convenciones
 
 - Ramas: `main` protegida, trabajo en `feature/<slug>`.
 - Commits: `feat:`, `fix:`, `chore:`, `docs:`.
-- Nada de secretos en el repo: `.env`, `data/` y llaves quedan fuera por `.gitignore`.
+- Nada de secretos en el repo.
