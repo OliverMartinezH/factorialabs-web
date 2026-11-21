@@ -36,7 +36,8 @@
 - [x] **3.2.** Ciclo completo y soporte en el copy
 - [x] **3.3.** Nota de desarrollo asistido por IA
 - [x] **3.4.** Favicon propio y `og:image` 1200×630
-- [ ] **3.5.** Publicar el caso 001 con nombre cuando el cliente autorice
+- [x] **3.5.** Página `/stack/` con arquitectura, evaluación por legado y entrega
+- [ ] **3.6.** Publicar el caso 001 con nombre cuando el cliente autorice
 
 ### Fase 4: Dominio
 - [ ] **4.1.** Dominio propio `factorialabs.cl` con `CNAME`

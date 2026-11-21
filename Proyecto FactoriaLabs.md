@@ -44,7 +44,7 @@ una conversación concreta. El éxito es un lead calificado, no tráfico.
 * Alcance: qué se moderniza (web, escritorio, móvil), sin imponer destino.
 * Caso 001: migración en curso de tres sistemas ASP + Access.
 * Método: cinco fases con verificación explícita y nota de desarrollo asistido por IA.
-* Stack: lo que efectivamente se usa.
+* Stack: resumen en la home y página propia `/stack/` con arquitectura, evaluación por legado y entrega.
 * Límites: lo que no se hace.
 * Preguntas frecuentes sobre software legado.
 * Contacto: formulario y correo directo.

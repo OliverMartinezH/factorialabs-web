@@ -1,0 +1,234 @@
+<main>
+
+  <section class="page-head">
+    <h1>Arquitectura y stack</h1>
+    <p class="lede">
+      Cómo construimos y con qué. El mismo stack que corre este sitio, aplicado a sistemas que
+      tienen que seguir funcionando mientras cambian.
+    </p>
+    <p class="head-meta mono">
+      <span>.NET 11</span>
+      <span>Angular 22</span>
+      <span>SQL Server 2025</span>
+      <span>Docker</span>
+      <span>CI / CD</span>
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-rail">
+      <span class="mono">PRINCIPIOS</span>
+      <span class="chip">criterio</span>
+    </div>
+    <div class="section-body">
+      <h2>Tres reglas que no negociamos.</h2>
+      <ul class="principles">
+        <li>
+          <h3>Simplicidad primero</h3>
+          <p>
+            Monolito modular antes que microservicios. La arquitectura se paga todos los días;
+            solo se agrega complejidad cuando resuelve un problema real.
+          </p>
+        </li>
+        <li>
+          <h3>Verificación antes que velocidad</h3>
+          <p>
+            Cada fase cierra con una comprobación concreta: cifras que cuadran, pantallas con
+            paridad, pruebas que pasan. Sin eso no se avanza.
+          </p>
+        </li>
+        <li>
+          <h3>Sin dependencia de nosotros</h3>
+          <p>
+            Código, documentación y pipeline quedan en tu poder. El sistema no debe quedar atado
+            a un proveedor para poder operar.
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-rail">
+      <span class="mono">STACK</span>
+      <span class="chip ok">verificado</span>
+    </div>
+    <div class="section-body">
+      <h2>Lo que usamos hoy.</h2>
+      <dl class="specs">
+        <div>
+          <dt class="mono">Backend</dt>
+          <dd>.NET 11<span class="note mono">STS · soporte hasta nov 2028</span></dd>
+        </div>
+        <div>
+          <dt class="mono">Frontend</dt>
+          <dd>Angular 22<span class="note mono">SSR o SSG según el caso</span></dd>
+        </div>
+        <div>
+          <dt class="mono">Datos</dt>
+          <dd>SQL Server 2025<span class="note mono">Express en on-premise · 10 GB por base</span></dd>
+        </div>
+        <div>
+          <dt class="mono">Entrega</dt>
+          <dd>Docker Compose<span class="note mono">una instancia por cliente</span></dd>
+        </div>
+        <div>
+          <dt class="mono">Calidad</dt>
+          <dd>CI en cada push<span class="note mono">build + pruebas</span></dd>
+        </div>
+        <div>
+          <dt class="mono">Auth</dt>
+          <dd>Identidad local<span class="note mono">intercambiable por Entra ID</span></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-rail">
+      <span class="mono">LEGADO</span>
+      <span class="chip">qué miramos</span>
+    </div>
+    <div class="section-body">
+      <h2>Qué evaluamos en cada origen.</h2>
+      <p class="section-lede">
+        Antes de proponer nada, el inventario. Esto es lo que miramos en cada tipo de sistema
+        heredado.
+      </p>
+
+      <table class="legacy">
+        <thead>
+          <tr>
+            <th scope="col">Origen</th>
+            <th scope="col">Dónde está el riesgo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">ASP clásico</th>
+            <td>Includes anidados, SQL concatenado, estado en sesión y pantallas sin mapa.</td>
+          </tr>
+          <tr>
+            <th scope="row">ASP.NET WebForms</th>
+            <td>ViewState, eventos y reglas escondidas en el code-behind.</td>
+          </tr>
+          <tr>
+            <th scope="row">JavaFX</th>
+            <td>Dependencias nativas, despliegue por puesto y ciclo de vida de la interfaz.</td>
+          </tr>
+          <tr>
+            <th scope="row">Xamarin</th>
+            <td>Versión de target, bindings y permisos atados a una plataforma.</td>
+          </tr>
+          <tr>
+            <th scope="row">Access</th>
+            <td>Consultas guardadas con lógica, claves duplicadas y el límite de 2 GB.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-rail">
+      <span class="mono">DATOS</span>
+      <span class="chip">por etapas</span>
+    </div>
+    <div class="section-body">
+      <h2>La migración de datos, sin sorpresas.</h2>
+      <ol class="steps">
+        <li>
+          <span class="mono step-n">01</span>
+          <div>
+            <h3>Inventario</h3>
+            <p>Tablas, consultas guardadas y reglas que viven dentro de la base.</p>
+          </div>
+        </li>
+        <li>
+          <span class="mono step-n">02</span>
+          <div>
+            <h3>Limpieza</h3>
+            <p>Duplicados, nulos y tipos inconsistentes se resuelven antes de copiar.</p>
+          </div>
+        </li>
+        <li>
+          <span class="mono step-n">03</span>
+          <div>
+            <h3>Migración por etapas</h3>
+            <p>Por módulo y con el sistema original todavía en operación.</p>
+          </div>
+        </li>
+        <li>
+          <span class="mono step-n">04</span>
+          <div>
+            <h3>Comparación</h3>
+            <p>Conteos, totales y muestras contra el original. Si no cuadra, no se avanza.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-rail">
+      <span class="mono">ENTREGA</span>
+      <span class="chip ok">sin cajas negras</span>
+    </div>
+    <div class="section-body">
+      <h2>Cómo queda el sistema al cerrar.</h2>
+      <ul class="delivery">
+        <li>Código en tu repositorio, con historial y CI funcionando.</li>
+        <li>Pruebas que describen el comportamiento actual, no solo el nuevo.</li>
+        <li>Documentación de despliegue y de las decisiones de arquitectura.</li>
+        <li>Pipeline reproducible: el mismo comando levanta el sistema donde sea.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-rail">
+      <span class="mono">FAQ</span>
+      <span class="chip">stack</span>
+    </div>
+    <div class="section-body">
+      <h2>Preguntas de arquitectura.</h2>
+      <div class="faq">
+        <details>
+          <summary>¿Qué stack usan?</summary>
+          <p>
+            Angular 22 para la interfaz, .NET 11 para servicios, SQL Server para datos, Docker para
+            entrega y CI en cada push. Se ajusta si el sistema exige otra cosa.
+          </p>
+        </details>
+        <details>
+          <summary>¿Cómo garantizan que la migración no rompe nada?</summary>
+          <p>
+            Con pruebas sobre el comportamiento actual, migración por fases y comparación de cifras
+            entre el sistema viejo y el nuevo antes de apagar el anterior.
+          </p>
+        </details>
+        <details>
+          <summary>¿Trabajan on-premise?</summary>
+          <p>
+            Sí. Una instancia por cliente, con despliegue documentado y sin dependencia obligatoria
+            de la nube.
+          </p>
+        </details>
+        <details>
+          <summary>¿Puedo mantener el sistema por mi cuenta?</summary>
+          <p>
+            Sí. Entregamos código, documentación y pipeline para que el sistema no dependa de
+            nosotros.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>¿Tu sistema entra en alguno de estos casos?</h2>
+    <p>Cuéntanos qué tienes hoy y te decimos qué miramos primero.</p>
+    <a class="btn btn-primary" routerLink="/" fragment="contacto">Hablemos de tu sistema</a>
+  </section>
+
+</main>
