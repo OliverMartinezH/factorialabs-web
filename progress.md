@@ -26,10 +26,11 @@
 - [x] **1.2.** SEO: título, H1, FAQ con JSON-LD, sitemap y robots
 
 ### Fase 2: Conversión
-- [ ] **2.1.** Crear planilla y Web App de Apps Script
-- [ ] **2.2.** Pegar el endpoint `/exec` en `core/config.ts`
-- [ ] **2.3.** Reemplazar email y WhatsApp placeholder
-- [ ] **2.4.** Verificar un envío real de punta a punta
+- [x] **2.1.** Crear planilla y Web App de Apps Script
+- [x] **2.2.** Pegar el endpoint `/exec` en `core/config.ts`
+- [x] **2.3.** Reemplazar el correo placeholder por el real
+- [x] **2.4.** Verificar un envío de punta a punta
+- [ ] **2.5.** Definir WhatsApp (opcional)
 
 ### Fase 3: Contenido y marca
 - [x] **3.1.** Sección de alcance (web, escritorio, móvil) sin destino impuesto
@@ -58,6 +59,6 @@
 ## 4. Next Immediate Step
 
 > [!tip] Siguiente paso
-> Crear la planilla `Leads` y la Web App de Apps Script, y pegar la URL `/exec` en
-> `src/FactoriaLabs.Web/src/app/core/config.ts` (`formEndpoint`). Mientras esté vacío, el
-> formulario cae a `mailto:` y no registra nada.
+> Ajustar el `TO` del script de Apps Script a `oliver.martinez@gmail.com` y publicar nueva
+> versión, para que llegue el aviso por correo. Después: definir WhatsApp y borrar las filas de
+> prueba de la planilla.

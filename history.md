@@ -24,3 +24,10 @@
   datos, aplicación heredada), FAQ con `FAQPage`, `Organization`, sitemap y robots.
 * Se eliminó el backend .NET y la base de datos: el sitio quedó estático por decisión de
   simplicidad.
+
+## Fase 2 — Conversión (25/11/2026)
+
+* Formulario conectado a una Web App de Apps Script que escribe en Google Sheets.
+* Antispam: campo trampa, marca de tiempo y dedupe por email en las últimas 20 filas.
+* Endpoint verificado de punta a punta con un envío real desde el sitio.
+* Correo de contacto público reemplazado por la dirección real.
