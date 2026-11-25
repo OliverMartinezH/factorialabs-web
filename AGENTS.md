@@ -38,6 +38,9 @@ estático por decisión explícita de simplicidad.
 * No commitear secretos: `.env`, `data/`, URLs privadas.
 * El endpoint de Apps Script vive en `src/app/core/config.ts`; nunca hardcodear credenciales.
 * Toda afirmación comercial nueva debe ser verdadera y comprobable.
+* **Antispam del formulario:** sin blocklist, sin cuarentena y sin correo de confirmación al
+  visitante. Solo campo trampa, marca de tiempo y dedupe por email. El aviso va únicamente al
+  correo del negocio.
 * El copy mantiene los términos objetivo de SEO: software legacy, software legado, modernización,
   migración de datos, aplicación heredada.
 

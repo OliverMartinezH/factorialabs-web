@@ -29,5 +29,5 @@
 
 * Formulario conectado a una Web App de Apps Script que escribe en Google Sheets.
 * Antispam: campo trampa, marca de tiempo y dedupe por email en las últimas 20 filas.
-* Endpoint verificado de punta a punta con un envío real desde el sitio.
+* Endpoint verificado en producción: fila en la planilla a las 11:47 y correo de aviso recibido.
 * Correo de contacto público reemplazado por la dirección real.

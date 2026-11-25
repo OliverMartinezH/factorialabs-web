@@ -9,8 +9,8 @@
 ## 1. Project Status
 
 * **Project:** FactoriaLabs (Angular 22 SSG + GitHub Pages)
-* **Current Phase:** Fase 2 — Conversión
-* **Last milestone:** Sitio publicado en GitHub Pages con SEO (21/11/2026)
+* **Current Phase:** Fase 3 — Contenido y marca
+* **Last milestone:** Formulario verificado en producción: fila en la planilla y correo recibido (25/11/2026)
 
 ---
 
@@ -48,6 +48,8 @@
 
 ## 3. Recent Iterations
 
+* 25/11/2026 — Formulario verificado de punta a punta: fila en `Leads` (11:47) y correo de aviso recibido.
+* 25/11/2026 — Correo público actualizado a `oliver.martinez@gmail.com`.
 * 21/11/2026 — Sección de alcance, ciclo completo con soporte, nota de IA, favicon y `og:image`.
 * 21/11/2026 — Gobernanza inicializada con okk-init.
 * 21/11/2026 — Build estático, SEO con cinco términos objetivo y deploy en Pages.
