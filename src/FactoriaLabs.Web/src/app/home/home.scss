@@ -267,9 +267,10 @@
   }
 }
 
-/* Pila moderna: se desplaza hacia la derecha. */
+/* Pila moderna: se desplaza hacia la derecha, en el violeta de acento. */
 .ticker-modern .ticker-track {
   animation-direction: reverse;
+  color: var(--accent);
 }
 
 /* Legado: gris, más lento y hacia la izquierda. */
