@@ -11,13 +11,13 @@
           Access. El destino lo define el negocio, no la moda.
         </p>
         <div class="actions">
-          <a class="btn btn-primary" routerLink="/" fragment="contacto">
+          <a class="btn btn-primary" routerLink="/contacto">
             Revisemos tu caso
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6" />
             </svg>
           </a>
-          <a class="btn btn-ghost" routerLink="/" fragment="metodo">Ver el método</a>
+          <a class="btn btn-ghost" routerLink="/metodo">Ver el método</a>
         </div>
         <p class="hero-meta mono">
           <span>Santiago, CL</span>
@@ -74,12 +74,21 @@
     </div>
   </section>
 
-  <div class="ticker" aria-hidden="true">
+  <div class="ticker ticker-modern" aria-hidden="true">
     <div class="ticker-track mono">
       <span>.NET 11</span><span>ANGULAR 22</span><span>SQL SERVER 2025</span><span>DOCKER COMPOSE</span>
       <span>XUNIT</span><span>CI / CD</span><span>ENTRA ID</span><span>ON-PREMISE</span>
       <span>.NET 11</span><span>ANGULAR 22</span><span>SQL SERVER 2025</span><span>DOCKER COMPOSE</span>
       <span>XUNIT</span><span>CI / CD</span><span>ENTRA ID</span><span>ON-PREMISE</span>
+    </div>
+  </div>
+
+  <div class="ticker ticker-legacy" aria-hidden="true">
+    <div class="ticker-track mono">
+      <span>ASP CLÁSICO</span><span>WEBFORMS</span><span>JAVAFX</span><span>XAMARIN</span>
+      <span>ACCESS</span><span>WINFORMS</span><span>EXCEL</span><span>VISUAL BASIC 6</span>
+      <span>ASP CLÁSICO</span><span>WEBFORMS</span><span>JAVAFX</span><span>XAMARIN</span>
+      <span>ACCESS</span><span>WINFORMS</span><span>EXCEL</span><span>VISUAL BASIC 6</span>
     </div>
   </div>
 
@@ -163,76 +172,6 @@
     </div>
   </section>
 
-  <section id="metodo" class="section">
-    <div class="section-rail">
-      <span class="mono">MÉTODO</span>
-      <span class="chip">por fases</span>
-    </div>
-    <div class="section-body">
-      <h2>Modernización y migración de datos, fase por fase.</h2>
-      <p class="section-lede">
-        Acompañamos el ciclo completo: diagnóstico, migración de datos, construcción, puesta en
-        marcha y soporte. Trabajamos con tu equipo en cada etapa, no en paralelo a él.
-      </p>
-
-      <ol class="phases">
-        <li>
-          <span class="phase-n mono">00</span>
-          <h3>Diagnóstico</h3>
-          <p>Inventario de pantallas, consultas Access y reglas escondidas en el código.</p>
-          <p class="check mono"><span aria-hidden="true">✓</span> toda consulta clasificada</p>
-        </li>
-        <li>
-          <span class="phase-n mono">01</span>
-          <h3>Datos</h3>
-          <p>Migración de Access a SQL Server, con limpieza previa de claves y nulos.</p>
-          <p class="check mono"><span aria-hidden="true">✓</span> conteos y totales cuadran</p>
-        </li>
-        <li>
-          <span class="phase-n mono">02</span>
-          <h3>Primer módulo</h3>
-          <p>Ventas y caja en .NET 11, corriendo en paralelo al sistema antiguo.</p>
-          <p class="check mono"><span aria-hidden="true">✓</span> mismo cierre en ambos</p>
-        </li>
-        <li>
-          <span class="phase-n mono">03</span>
-          <h3>Resto de módulos</h3>
-          <p>Los demás módulos con el mismo criterio: uno a la vez, comparado contra el legacy.</p>
-          <p class="check mono"><span aria-hidden="true">✓</span> mismas cifras por módulo</p>
-        </li>
-        <li>
-          <span class="phase-n mono">04</span>
-          <h3>Puesta en marcha</h3>
-          <p>El sistema anterior queda en solo lectura y el nuevo opera con soporte.</p>
-          <p class="check mono"><span aria-hidden="true">✓</span> sin diferencias</p>
-        </li>
-      </ol>
-
-      <div class="ai-note">
-        <p class="mono ai-label">DESARROLLO ASISTIDO POR IA</p>
-        <p>
-          Inventariamos el código más rápido, generamos pruebas sobre el comportamiento actual y
-          migramos en pasos verificables. La IA acelera el trabajo; no reemplaza la verificación.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section id="stack" class="section">
-    <div class="section-rail">
-      <span class="mono">STACK</span>
-      <span class="chip ok">verificado</span>
-    </div>
-    <div class="section-body">
-      <h2>Lo que efectivamente usamos.</h2>
-      <p class="section-lede">
-        .NET 11, Angular 22 y SQL Server 2025, con CI en cada push. La arquitectura, las pruebas y
-        la forma de entrega están en la página de stack.
-      </p>
-      <a class="btn btn-ghost" routerLink="/stack">Ver arquitectura y stack →</a>
-    </div>
-  </section>
-
   <section id="limites" class="section">
     <div class="section-rail">
       <span class="mono">LÍMITES</span>
@@ -257,78 +196,12 @@
     </div>
   </section>
 
-  <section id="preguntas" class="section">
-    <div class="section-rail">
-      <span class="mono">FAQ</span>
-      <span class="chip">software legado</span>
-    </div>
-    <div class="section-body">
-      <h2>Preguntas sobre software legado.</h2>
-      <div class="faq">
-        <details>
-          <summary>¿Qué es una aplicación heredada o software legado?</summary>
-          <p>
-            Es un sistema que sigue en producción pero ya no se puede mantener con comodidad:
-            ASP clásico, WebForms, JavaFX, Xamarin, Access. Funciona, pero cada cambio es un riesgo.
-          </p>
-        </details>
-        <details>
-          <summary>¿A qué tecnología migran?</summary>
-          <p>
-            Depende del sistema. No imponemos un destino: el stack se define después del inventario,
-            según lo que el software necesite para volver a ser mantenible.
-          </p>
-        </details>
-        <details>
-          <summary>¿Cómo es la migración de datos desde Access a SQL Server?</summary>
-          <p>
-            Se inventarían tablas y consultas, se limpian claves duplicadas y nulos, se migra por
-            etapas y se comparan conteos y totales contra el sistema original antes de usarlo.
-          </p>
-        </details>
-        <details>
-          <summary>¿Se puede modernizar sin detener la operación?</summary>
-          <p>
-            Sí. El sistema antiguo sigue funcionando en paralelo y solo se apaga cuando el nuevo
-            cuadra las mismas cifras.
-          </p>
-        </details>
-        <details>
-          <summary>¿Trabajan con sistemas en ASP clásico, JavaFX o Xamarin?</summary>
-          <p>
-            Sí. Son el tipo de aplicaciones heredadas que modernizamos con más frecuencia, junto a
-            WebForms y bases Access.
-          </p>
-        </details>
-        <details>
-          <summary>¿Ofrecen soporte después del lanzamiento?</summary>
-          <p>
-            Sí, forma parte del ciclo. No entregamos y desaparecemos: seguimos con actualizaciones,
-            correcciones y mejoras sobre el sistema ya modernizado.
-          </p>
-        </details>
-        <details>
-          <summary>¿Cuánto demora una modernización?</summary>
-          <p>
-            Depende del inventario: no damos plazo ni precio antes de revisar el sistema.
-            Cualquier cifra sin diagnóstico es una apuesta.
-          </p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <section id="contacto" class="section section-contact">
-    <div class="section-rail">
-      <span class="mono">CONTACTO</span>
-      <span class="chip ok">abierto</span>
-    </div>
-    <div class="section-body">
-      <h2>Cuéntanos qué sistema te está frenando.</h2>
-      <p class="section-lede">
-        Respondemos con un diagnóstico inicial, no con una cotización a ciegas.
-      </p>
-      <app-contact />
+  <section class="cta-band">
+    <h2>¿Modernizamos el tuyo?</h2>
+    <p>Cuéntanos qué sistema te está frenando y te decimos qué miramos primero.</p>
+    <div class="actions">
+      <a class="btn btn-primary" routerLink="/contacto">Hablemos</a>
+      <a class="btn btn-ghost" routerLink="/metodo">Ver el método</a>
     </div>
   </section>
 

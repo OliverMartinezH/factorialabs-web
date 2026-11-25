@@ -7,11 +7,11 @@
     </a>
 
     <nav class="nav" aria-label="Principal">
-      <a routerLink="/" fragment="alcance">Alcance</a>
-      <a routerLink="/" fragment="caso">Caso</a>
-      <a routerLink="/" fragment="metodo">Método</a>
-      <a routerLink="/stack">Stack</a>
-      <a class="nav-cta" routerLink="/" fragment="contacto">Hablemos</a>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+      <a routerLink="/metodo" routerLinkActive="active">Método</a>
+      <a routerLink="/stack" routerLinkActive="active">Stack</a>
+      <a routerLink="/preguntas" routerLinkActive="active">Preguntas</a>
+      <a class="nav-cta" routerLink="/contacto" routerLinkActive="active">Hablemos</a>
     </nav>
   </div>
 </header>

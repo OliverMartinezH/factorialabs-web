@@ -1,0 +1,32 @@
+<main>
+
+  <section class="page-head">
+    <h1>Preguntas sobre software legado.</h1>
+    <p class="lede">
+      Lo que suelen preguntar antes de contratar una modernización. Si falta algo, escríbenos.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-rail">
+      <span class="mono">FAQ</span>
+      <span class="chip">software legado</span>
+    </div>
+    <div class="section-body">
+      <div class="faq">
+        @for (item of faq; track item[0]) {
+          <details>
+            <summary>{{ item[0] }}</summary>
+            <p>{{ item[1] }}</p>
+          </details>
+        }
+      </div>
+
+      <p class="footnote">
+        ¿Tu caso no aparece?
+        <a routerLink="/contacto">Cuéntanos qué sistema te está frenando</a>.
+      </p>
+    </div>
+  </section>
+
+</main>
