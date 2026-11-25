@@ -54,7 +54,8 @@ La mono solo aparece donde hay una medición, un código o una etiqueta de estad
 |---|---|
 | `.panel` | Consola de paridad: borde `--line`, radio 12 px, gradiente blanco a `#fafaff`, sombra `0 30px 70px -28px rgba(24,20,64,.22)`, scanline violeta de 5.5 s |
 | `.metrics` | Filas `1fr auto auto 1rem`; el valor nuevo en tinta plena, el legacy atenuado; el check verde entra escalonado |
-| `.ticker` | Banda de stack con marquee de 34 s y máscara de degradado en los bordes |
+| `.ticker-modern` | Banda de stack en violeta de acento, marquee de 34 s hacia la derecha |
+| `.ticker-legacy` | Banda de tecnologías heredadas en gris, 46 s hacia la izquierda |
 | `.migrate` | Diagrama de 3 fuentes que convergen en una tarjeta con borde violeta, tinte suave y glow |
 | `.phases` | Rejilla de 5 columnas con número mono y verificación en verde al pie |
 | `.specs` | Dos columnas de definiciones `105px / 1fr`, etiqueta mono en mayúsculas |

@@ -18,6 +18,8 @@ estático por decisión explícita de simplicidad.
 ## 2. Principios arquitectónicos
 
 * **Simplicity First (KISS):** un solo artefacto estático, sin servidor propio.
+* **Una sección con valor de búsqueda es una ruta propia.** No se navega con anclas: cada bloque
+  relevante (`/metodo`, `/stack`, `/preguntas`, `/contacto`) tiene su URL, su `title` y su JSON-LD.
 * **Sin backend:** el contacto ocurre en el navegador o en Google Apps Script.
 * **No inventar datos:** sin testimonios, métricas, precios ni plazos.
 * **Testing:** todo cambio de lógica lleva test antes de cerrar la tarea.

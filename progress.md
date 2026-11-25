@@ -49,6 +49,8 @@
 
 ## 3. Recent Iterations
 
+* 25/11/2026 — Sitio separado en cinco rutas con SEO propio: home, método, stack, preguntas y contacto.
+* 25/11/2026 — Dos bandas de tecnologías en direcciones opuestas (moderna en violeta, legado en gris).
 * 25/11/2026 — Formulario verificado de punta a punta: fila en `Leads` (11:47) y correo de aviso recibido.
 * 25/11/2026 — Correo público actualizado a `oliver.martinez@gmail.com`.
 * 21/11/2026 — Sección de alcance, ciclo completo con soporte, nota de IA, favicon y `og:image`.
