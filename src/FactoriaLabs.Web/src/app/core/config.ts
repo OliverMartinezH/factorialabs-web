@@ -11,5 +11,6 @@ export const CONTACT = {
    * URL /exec de la Web App de Google Apps Script que recibe los leads.
    * Vacío = el formulario abre el correo del visitante (mailto).
    */
-  formEndpoint: '',
+  formEndpoint:
+    'https://script.google.com/macros/s/AKfycbwuvMvwhhZ-X2uS9Ko06ruYchydZd6X1g3atjv0t--QgzW6gEiFQt4GwtzMc6ZdmziD/exec',
 };
